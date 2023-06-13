@@ -15,10 +15,14 @@ class Friend(models.Model):
         return self.user.username
     
     @classmethod
+    def create_friend(cls, user):
+        cls.objects.create(user=user).save()
+    
+    @classmethod
     def send_message(cls, sent_from, sent_to, text):
         sender = cls.objects.get(user=sent_from)
         to = sender.friend_list.get(user=sent_to)
-        message = Message.objects.create(sender=sender, text=text, sent_to=to)
+        message = Message.objects.create(sender=sender.user, text=text, receiver=to)
         message.save()
 
     @classmethod
@@ -82,10 +86,10 @@ class Message(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text = models.TextField()
     sent_at = models.DateTimeField(auto_now=True)
-    sent_to = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    receiver = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Messages'
 
     def __str__(self):
-        return self.text[-10]
+        return self.text[:10]
