@@ -8,6 +8,10 @@ class Profile(models.Model):
     profile_image = models.ImageField(upload_to="file/profile", blank=True)
     phone_number = models.CharField(max_length=15)
 
+    class Meta:
+        verbose_name = 'Profile'
+        verbose_name_plural = 'Profiles'
+
     def __str__(self):
         return self.user.get_username()
     
@@ -19,4 +23,7 @@ class Profile(models.Model):
     @classmethod
     def delete_profile(cls, user):
         cls.objects.get(user=user).delete()
+
+    def list_group(self):
+        return self.chatgroup_set.all()
     

@@ -2,14 +2,16 @@ from django.db import models
 from django.conf import settings
 
 from user_auth.models import Profile
+from django.contrib.auth.models import User
 
 
 class Friend(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     friend_list = models.ManyToManyField(Profile, blank=True)
 
     class Meta:
-        verbose_name='Friends'
+        verbose_name='Friend'
+        verbose_name_plural = 'Friends'
 
     def __str__(self):
         return self.user.username
@@ -33,10 +35,11 @@ class Friend(models.Model):
 class ChatGroup(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
-    member = models.ManyToManyField(Profile, blank=True, through='Membership')
+    member = models.ManyToManyField(Profile, blank=True, through='Membership', through_fields=('chat_group', 'profile'))
     
     class Meta:
-        verbose_name = 'Groups'
+        verbose_name = 'Group'
+        verbose_name_plural = 'Groups'
 
     def __str__(self):
         return self.name
@@ -45,6 +48,11 @@ class ChatGroup(models.Model):
     def create_group(cls, creator, name):
         new_group = cls.objects.create(creator=creator, name=name)
         new_group.save()
+        creator_profile = Profile.objects.get(user=creator)
+        new_group.member.add(creator_profile)
+        #-----------------what i needed to update-----------------
+        # chat_group = ChatGroup.objects.get(creator)
+        # -------------------------
 
     @classmethod
     def add_group_member(cls, group_name, new_member):
@@ -68,6 +76,23 @@ class ChatGroup(models.Model):
             member.remove()
         else:
             raise PermissionError("Non-admin not allowed remove members")
+        
+    @staticmethod
+    def send_message(sender, chat_group, msg):
+        
+        GroupMessage.objects.create(group=chat_group, text=msg).save()
+        
+class GroupMessage(models.Model):
+    group = models.ForeignKey(ChatGroup, on_delete=models.CASCADE)
+    text = models.TextField()
+    sent_when = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
+
+    def __str__(self):
+        return self.text[:10]
 
 class Membership(models.Model):
     class Rank(models.TextChoices):
@@ -78,7 +103,8 @@ class Membership(models.Model):
     chat_group = models.ForeignKey(ChatGroup, on_delete=models.CASCADE)
     status = models.CharField(
         max_length=8,
-        choices=Rank.choices
+        choices=Rank.choices,
+        default=Rank.member
         )
     added_when = models.DateTimeField(auto_now=True)
     
@@ -89,7 +115,9 @@ class Message(models.Model):
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = 'Messages'
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
 
     def __str__(self):
         return self.text[:10]
+    
