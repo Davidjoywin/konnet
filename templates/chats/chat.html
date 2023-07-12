@@ -1,0 +1,42 @@
+{% extends 'chats/base.html' %} 
+
+
+{% block main %} 
+<div id="user">
+  <img src="" alt="">
+  <span>{{ friend_profile|title }}</span>
+</div>
+<div id="chat">
+  {% for message in messages %} 
+  {% if user.username == friend_profile %}
+  <div id="message-1">{{ message.text }}</div>
+  {% else %}
+  <div id="message-2">{{ message.text }}</div>
+  {% endif %} 
+  {% endfor %} 
+
+  {% comment %} 
+  <div id="message-1">hello david</div>
+  <div id="message-2">I am good as you can see</div>
+  <div id="message-1">hello david</div>
+  <div id="message-2">I am good as you can see</div>
+  <div id="message-1">hello david</div>
+  <div id="message-2">I am good as you can see</div>
+  <div id="message-1">hello david</div>
+  <div id="message-2">I am good as you can see</div>
+  <div id="message-1">hello david</div>
+  <div id="message-2">I am good as you can see</div>
+  {% endcomment %}
+</div>
+<div id="message">
+  <!-- <div id="file">
+    <input type="file" value="+" id="add-media">
+    <span id="file-helper">+</span>
+  </div> -->
+  <form action="{% url 'chat:chat_friend' friend_profile %}" id="message-form" method="post">
+    {% csrf_token %} 
+    <input type="text" name="message" id="text-message">
+    <input type="submit" value="send" id="send-message">
+  </form>
+</div>
+{% endblock %} 

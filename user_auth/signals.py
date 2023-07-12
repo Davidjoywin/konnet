@@ -8,9 +8,8 @@ from .models import Profile
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
-       Profile.create_profile(user=sender)
+       Profile.create_profile(user=instance)
 
 @receiver(post_delete, sender=User)
 def delete_profile(sender, instance, **kwargs):
-    profile = Profile.objects.get(user=sender)
-    profile.delete()
+    Profile.delete_profile(user=instance)

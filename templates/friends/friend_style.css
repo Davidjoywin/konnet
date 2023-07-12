@@ -1,0 +1,41 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  display: flex;
+  margin: 0;
+  border: 0;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+#friends {
+  width: 50%;
+  height: 90%;
+  background: black;
+  overflow: auto;
+}
+
+.friend-container {
+  display: flex;
+  margin: 2rem;
+  padding: 0 1rem;
+  background: green;
+  gap: 2rem;
+  align-items: center;
+}
+
+img {
+  width: 4rem;
+  height: 4rem;
+  background: black;
+  border-radius: 50%;
+}
+
+p {
+  font-size: 2rem;
+
+}

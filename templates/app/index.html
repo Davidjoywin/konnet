@@ -1,0 +1,5 @@
+{% for profile in profiles %} 
+{{ profile }} <a href="{% url 'chat:add_friends' profile.user.id %}">Add friend</a> <br>
+{% endfor %} 
+
+{{ friends }}

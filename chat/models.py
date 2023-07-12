@@ -17,8 +17,16 @@ class Friend(models.Model):
         return self.user.username
     
     @classmethod
+    def list_friends(cls, user):
+        return cls.objects.get(user=user).friend_list.all()
+    
+    @classmethod
     def create_friend(cls, user):
         cls.objects.create(user=user).save()
+
+    @classmethod
+    def delete_friend(cls, user):
+        cls.objects.get(user=user).delete()
     
     @classmethod
     def send_message(cls, sent_from, sent_to, text):
@@ -30,7 +38,8 @@ class Friend(models.Model):
     @classmethod
     def add_friend(cls, user, new_friend):
         user = cls.objects.get(user=user)
-        user.friend_list.add(new_friend)
+        if new_friend.user != user:
+            user.friend_list.add(new_friend)
 
 class ChatGroup(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -43,6 +52,10 @@ class ChatGroup(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @classmethod
+    def list_groups(cls):
+        return cls.objects.all()
 
     @classmethod
     def create_group(cls, creator, name):
@@ -54,14 +67,19 @@ class ChatGroup(models.Model):
         # chat_group = ChatGroup.objects.get(creator)
         # -------------------------
 
+    #-------correction needed here------------
+    #add members to groups
     @classmethod
     def add_group_member(cls, group_name, new_member):
-        group = cls.objects.get(name=group_name)
-        auth_user_in_group = group.member.get(user=settings.AUTH_USER_MODEL)
+        chat_group = cls.objects.get(name=group_name)
+        user_profile = User.objects.get(username=settings.AUTH_USER_MODEL).profile
+        auth_user_in_group = chat_group.membership_set.get(profile=user_profile)
         if auth_user_in_group.through.rank == 'Admin':
-            group.member.add(new_member)
+            chat_group.member.add(new_member)
         else:
             raise PermissionError("Non-admin not allowed to add member")
+        #----------------------------
+
 
     @classmethod
     def delete_group(cls, name):
@@ -112,6 +130,7 @@ class Message(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text = models.TextField()
     sent_at = models.DateTimeField(auto_now=True)
+    read = models.BooleanField(default=False)
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     class Meta:

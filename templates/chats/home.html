@@ -1,0 +1,16 @@
+{% extends 'chats/base.html' %} 
+
+{% block style %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'home_style.css' %}">
+{% endblock %}
+
+{% block main %}
+{% for friend in friends %}
+<div class="friend-container">
+  <img src="" alt="" class="friend-img">
+  <p class="friend"><a href="{% url 'chat:chat_friend' friend %}">{{ friend|title }}</a></p>
+</div>
+{% endfor %} 
+
+{% endblock %} 

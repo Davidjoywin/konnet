@@ -1,0 +1,271 @@
+* {
+  border: 0;
+  margin: 0;
+  color: #ffffff;
+  font-size: 62.5%;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 10%;
+  background: black;
+}
+
+#user {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
+  padding: 1rem;
+  background: #22df34 /*#312525*/;
+}
+
+#user img {
+  width: 6rem;
+  height: 6rem;
+  background: black;
+  border-radius: 50%;
+}
+
+#user span {
+  font-size: 2.5rem;
+}
+
+#auth {
+  width: 100%;
+  display: flex;
+  padding: 0 2rem 0 1rem;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#auth div {
+  color: white;
+  font-size: 2rem;
+}
+
+#auth .image {
+  left: 20rem;
+  width: 5rem;
+  height: 5rem;
+  background: red;
+  justify-self: right;
+  border-radius: 50%;
+}
+
+.login {
+  align-self: center;
+}
+
+#auth div a{
+  color: white;
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+#container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 20vw 50vw 30vw;
+  font-size: 5rem;
+  width: 100vw;
+  height: 90vh;
+  overflow: hidden;
+}
+/*left aside start here*/
+#left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: calc(100% - 10rem);
+  padding-top: 10rem;
+  background: #0e0d0d;
+}
+
+#left div {
+  display: flex;
+  margin: 4px;
+  padding: .8rem;
+  height: fit-content;
+  border-radius: 2rem;
+  flex-direction: row;
+  background: #22df34 /*#312525*/;
+  justify-content: space-between;
+}
+/*left aside ends here*/
+
+
+/*main for chat starts here*/
+main {
+  height: calc(100vh);
+  width: 100%;
+  background: #0e0d0d;
+}
+
+#chat {
+  display: flex;
+  flex-direction: column;
+  height: 72vh;
+  overflow-y: auto;
+  z-index: 0;
+}
+
+#message-1, #message-2 {
+  margin: .8rem;
+  padding: .8rem;
+  width:fit-content;
+  height: fit-content;
+  background: #22df34/*#312525*/;
+  border-radius: 2rem;
+  font-size: 2rem;
+}
+
+#message-1 {
+  max-width: 60%;
+  align-self: flex-start;
+}
+
+#message-2 {
+  max-width: 60%;
+  align-self: flex-end;
+  background: green
+}
+
+#message {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 8vh;
+  overflow: auto;
+  z-index: 1
+}
+
+/* #file {
+  position: relative;
+}
+
+#add-media {
+  position: absolute;
+  width: 10%;
+  z-index: 1;
+}
+
+#file-helper {
+  position: absolute;
+  z-index: 0;
+  text-align: center;
+  background: black;
+} */
+
+
+#message-form {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  column-gap: 1rem;
+  justify-content: center;
+}
+
+#text-message {
+  width: 70%;
+  height: 4rem;
+  color: black;
+  font-size: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  border-radius: 2rem;
+}
+
+input[type=text]:focus {
+  color: red
+}
+
+#send-message {
+  height: 4rem;
+  background: black;
+  font-size: 2rem;
+  border-radius: 2rem;
+}
+/*main chat ends here*/
+
+/*main for friends start here*/
+.friend-container {
+  display: flex;
+  width: fit-content;
+  margin: 2rem;
+  padding: 0 1rem;
+  background: green;
+  gap: 2rem;
+  align-items: center;
+}
+
+.friend-container p {
+  font-size: 2rem;
+}
+
+p#friend {
+  width: 4rem;
+  height: 4rem;
+  background: red;
+  border-radius: 50%;
+}
+
+
+
+/*main for friends ends here*/
+
+/*right aside starts here*/
+#right {
+  height: calc(100% - 15rem);
+  padding-top: 8rem;
+  padding-bottom: 20rem;
+  background: #0e0d0d;
+  overflow-y: auto;
+}
+
+#right div {
+  height: 85%;
+  overflow-y: auto;
+}
+
+#right-div p {
+  margin: 4px;
+  padding: .8rem;
+  height: fit-content;
+  border-radius: 2rem;
+  background: #22df34/*#312525*/;
+}
+/*right aside ends here*/
+
+@media only screen and (max-width: 780px){
+  #container {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 100%;
+  }
+
+  #right, #left {
+    display: none;
+  }
+
+  #main {
+    width: 100%;
+    z-index: 1;
+    background: red;
+
+  }
+}

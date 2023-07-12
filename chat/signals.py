@@ -12,5 +12,5 @@ def create_friend(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=User)
 def delete_friend(sender, instance, **kwargs):
-    friend = Friend.objects.get(user=instance)
-    friend.delete()
+    Friend.delete_friend(user=instance)
+    
