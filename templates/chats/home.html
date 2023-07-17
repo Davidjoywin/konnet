@@ -1,16 +1,29 @@
-{% extends 'chats/base.html' %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="container">
+    <header>
 
-{% block style %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'home_style.css' %}">
-{% endblock %}
+    </header>
 
-{% block main %}
-{% for friend in friends %}
-<div class="friend-container">
-  <img src="" alt="" class="friend-img">
-  <p class="friend"><a href="{% url 'chat:chat_friend' friend %}">{{ friend|title }}</a></p>
-</div>
-{% endfor %} 
+    <aside id="left">
 
-{% endblock %} 
+    </aside>
+
+    <main></main>
+
+    <aside id="right">
+
+    </aside>
+
+    footere     
+  </div>
+</body>
+</html>

@@ -8,22 +8,25 @@ from django.contrib.auth import tokens
 from django.contrib.auth import login, logout, authenticate
 
 def index(request):
-    return HttpResponse("Log in")
+    return redirect("chat:home")
 
 def register(request):
     if request.method == 'POST':
-        first_name=request.POST.get("firstname")
-        last_name=request.POST.get("lastname")
+        full_name = request.POST.get('fname')
         email=request.POST.get("email")
         username=request.POST.get("username")
         password1=request.POST.get("password1")
         password2=request.POST.get("password2")
+
+        first_name, last_name = full_name.split(' ')
 
         if password1 == password2:
             password = make_password(password1)
             try:
                 user=User.objects.create(
                     first_name=first_name, last_name=last_name, email=email, username=username, password=password)
+                
+                login(request, username=username, password=password)
                 user.save()
                 # acct = AccountActivationTokenGenerator()
                 # acc_token = acct.make_token(user)
@@ -36,7 +39,7 @@ def register(request):
                 #     )
             except Exception:
                 messages.error("An error occurred!")
-            return redirect("auth:activation-prompt")
+            return redirect("chat:home")
         else:
             messages.error(request, "confirmation password is not correct!")
             return redirect("auth:register")

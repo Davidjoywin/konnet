@@ -1,23 +1,30 @@
 import json
 from django.db.models import Q
 from django.urls import reverse
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from .models import Friend, ChatGroup, Message
 
+@login_required
 def home(request):
     user = request.user.friend
     
+    friend_chat = [
+        User.objects.get(id=id[0])
+        for id in request.user.message_set.values_list('receiver').distinct()
+    ]
     friend_list = user.friend_list.all()
 
     context = {
-        'friends': friend_list
+        'friends': friend_chat
     }
 
     return render(request, 'chats/home.html', context)
 
+@login_required
 def chat_friends(request, profile):
     user = request.user
 
@@ -36,11 +43,8 @@ def chat_friends(request, profile):
     )
 
     if request.method == 'POST':
-        text = request.POST.get('text-message')
-        msg = Message.objects.create(sender=user, receiver=friend_profile, text=text)
-        msg.save()
-        # Friend.send_message(user, friend_profile, text)
-
+        text = request.POST.get('message')
+        Friend.send_message(sent_from=user, sent_to=friend_profile, text=text)
         return redirect(reverse('chat:chat_friend', args=(friend_profile, )))
 
     context = {
@@ -50,12 +54,27 @@ def chat_friends(request, profile):
 
     return render(request, 'chats/chat.html', context)
 
+def friends(request):
+    friend = request.user.friend
+    friend_list = friend.friend_list.all()
+    new_friends = [i
+        for i in Friend.objects.all()
+        if i in friend_list
+    ]
+
+    context = {
+        'friends': friend_list,
+        'new_friends': new_friends
+    }
+
+    return render(request, 'chats/friends.html', context)
+
 def list_friends(request):
     return HttpResponse('')
 
 def get_unreads(request):
     user_authenticated = request.user
-    unread_messages = Message.objects.filter(sender=user_authenticated, read=False).count()
+    unread_messages = Message.objects.filter(receiver=user_authenticated.profile, read=False).count()
     unread = {'unread_messages': unread_messages}
 
     return JsonResponse(unread)

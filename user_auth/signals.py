@@ -12,4 +12,7 @@ def create_profile(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=User)
 def delete_profile(sender, instance, **kwargs):
-    Profile.delete_profile(user=instance)
+    try:
+        Profile.delete_profile(user=instance)
+    except Exception:
+        pass

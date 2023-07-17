@@ -128,8 +128,8 @@ STATICFILES_DIRS = [
 ]
 
 # Login required
-LOGIN_URL='chat/login'
-LOGIN_REDIRECT_URL='auth/index'
+LOGIN_URL='/auth/login'
+LOGIN_REDIRECT_URL='/chat/home'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -26,7 +26,11 @@ class Friend(models.Model):
 
     @classmethod
     def delete_friend(cls, user):
-        cls.objects.get(user=user).delete()
+        try:
+            friend = cls.objects.get(user=user)
+            friend.delete()
+        except Exception:
+            pass
     
     @classmethod
     def send_message(cls, sent_from, sent_to, text):

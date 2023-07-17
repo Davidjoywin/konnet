@@ -13,4 +13,3 @@ def create_friend(sender, instance, created, **kwargs):
 @receiver(post_delete, sender=User)
 def delete_friend(sender, instance, **kwargs):
     Friend.delete_friend(user=instance)
-    
