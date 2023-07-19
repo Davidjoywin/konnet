@@ -1,6 +1,8 @@
 :root {
   --body-font-color: #cfcaca;
   --body-background-color: #030303;
+  --sender-background-color: #56b656;
+  --receiver-background-color: #1b5e1b;
 }
 
 html {
@@ -27,10 +29,15 @@ body {
 body #body-container {
   width: 97vw;
   height: 97vh;
+  overflow: hidden;
 }
 
 header, nav, aside, main {
   background: var(--body-background-color);
+}
+
+nav {
+  display: block;
 }
 
 header {
@@ -112,6 +119,7 @@ button {
 /* -----------main----------- */
 #main {
   position: relative;
+  width: 100%;
 }
 
 #profile-info {
@@ -120,6 +128,7 @@ button {
   font-size: 2rem;
   color: var(--body-font-color);
   border-bottom: solid;
+  border-color: #181616;
   align-items: center;
   justify-content: space-between;
 }
@@ -142,30 +151,66 @@ img {
   text-align:justify;
 }
 
-.chat {
+#chat-message {
+  display: flex;
+  height: 68vh;
+  background: inheit;
+  flex-direction: column;
   font-size: 2rem;
+  color: var(--body-font-color);
+  overflow-y: auto;
+}
+
+#chat-message::-webkit-scrollbar{
+  width: 0;
+}
+
+.sender {
+  width: fit-content;
+  max-width: 70%;
+  padding: .5rem;
+  margin: 1rem 0 1rem 1rem;
+  border-radius: 0 1rem 1rem 1rem;
+  background: var(--sender-background-color);
+}
+
+.receiver {
+  padding: .5rem;
+  margin: 1rem 1rem 1rem 0;
+  border-radius: 1rem 1rem 0 1rem;
+  align-self: flex-end;
+  max-width: 70%;
+  background: var(--receiver-background-color);
 }
 
 #chat-form {
   position: absolute;
   display: flex;
   justify-content: center;
-  bottom: 0;
-  width: 50%;
+  bottom: 1rem;
   gap: 2rem;
+  width: calc(100vw - 40vw - 4rem - 1.5rem);
+  background: inherit;
+  padding: 1rem 0 1rem 0;
+}
+
+#chat-form input {
+  color: var(--body-font-color);
+  background: #181616;
+  height: 3rem
 }
 
 input[type=text] {
   width: 70%;
-  height: 3rem;
   border-radius: 2rem;
   border: none;
+  padding: 0 2rem 0 2rem;
 }
 
 input[type=submit] {
   width: 5rem;
-  height: 3rem;
   border: none;
+  font-size: 1.5rem;
   border-radius: 2rem;
 }
 /* -------------end------------ */
@@ -202,7 +247,7 @@ input[type=submit] {
     background: var(--body-font-color);
     height: .5rem;
   }
-  
+
   #burger::before {
     content: '';
     position: absolute;
@@ -212,7 +257,7 @@ input[type=submit] {
     top: -1rem;
     background: inherit;
   }
-  
+
   #burger::after {
     content: '';
     position: absolute;
@@ -228,7 +273,7 @@ input[type=submit] {
     display: none;
     width: fit-content;
     padding-bottom: 10rem;
-    background: red;
+    background: var(--body-background-color);
   }
 
   aside {
@@ -238,5 +283,9 @@ input[type=submit] {
   #container {
     position: relative;
     grid-template-columns: 100%;
+  }
+
+  #chat-form {
+    width: 100%;
   }
 }
