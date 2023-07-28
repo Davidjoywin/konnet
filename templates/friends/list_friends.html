@@ -5,6 +5,10 @@
   <link rel="stylesheet" href="{% static 'friends/friend_list_style.css' %}">
 {% endblock %}
 
+{% block title %}
+  Friends
+{% endblock %}
+
 {% block main %}
 <form action="#" id="friend-search">
   <input type="text">
@@ -19,8 +23,8 @@
         <img src="./blank-profile-pics.png" alt="blank profile pics">
       </a>
       <a href="{% url 'chat:chat_friend' friend.profile %}" class="profile-link">
-        <span class="profile-name">{{ friend }}</span>
-        <span class="profile-username">@{{ friend.first_name }}</span>
+        <span class="profile-name">{{ friend.first_name }}</span>
+        <span class="profile-username">@{{ friend.username }}</span>
       </a>
     </div>
     <button class="profile-shortcut">
