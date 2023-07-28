@@ -15,55 +15,46 @@ def register(request):
         full_name = request.POST.get('fname')
         email=request.POST.get("email")
         username=request.POST.get("username")
-        password1=request.POST.get("password1")
-        password2=request.POST.get("password2")
+        password1=request.POST.get("password")
+        password2=request.POST.get("verify-password")
 
-        first_name, last_name = full_name.split(' ')
+        first_name, last_name = full_name.split(' ') if len(full_name.split(' ')) == 2 else [full_name, None]
 
-        if password1 == password2:
+        verified = password1 == password2
+
+        if verified:
             password = make_password(password1)
-            try:
-                user=User.objects.create(
-                    first_name=first_name, last_name=last_name, email=email, username=username, password=password)
-                
-                login(request, username=username, password=password)
-                user.save()
-                # acct = AccountActivationTokenGenerator()
-                # acc_token = acct.make_token(user)
-
-                
-                # user.email_user(
-                #     subject="Account verification", 
-                #     message=verify_mail(user.username, acc_token), 
-                #     from_email="davidjoy.win@gmail.com"
-                #     )
-            except Exception:
-                messages.error("An error occurred!")
-            return redirect("chat:home")
         else:
-            messages.error(request, "confirmation password is not correct!")
-            return redirect("auth:register")
-    else:
-        return render(request, 'auth/signup.html')
-    
-# def activation_prompt(request):
-#     return render(request, 'auth/activation_prompt.html')
+            messages.info(request, "Confirmation password incorrect!")
+            return redirect('auth:register')
+        
+        user = User.objects.create(
+            username = username,
+            password = password,
+            first_name = first_name,
+            last_name = last_name,
+            email = email
+        )
+        user.save()
+
+        login(request, user)
+        return redirect('chat:home')  
+    return render(request, 'auth/signup.html')
 
 def auth_login(request):
     if request.method == 'POST':
         username=request.POST.get("username")
         password=request.POST.get("password")
-
+        
         user=authenticate(request, username=username, password=password)
 
         if user:
             login(request, user)
             return redirect("chat:home")
         # return redirect("auth:not-active")
+        else:
+            messages.add_message(request, messages.ERROR, "Username or Password incorrect!")
     return render(request, "auth/login.html")
-
-# def not_active(request):
-#     return render(request, "auth/not_active.html")
 
 def auth_logout(request):
     if request.user.is_authenticated:
@@ -71,12 +62,8 @@ def auth_logout(request):
         return redirect("auth:index")
     return redirect("auth:index")
 
-# def verify(request, user, token):
-#     user = User.objects.get(username=user)
-#     acct = AccountActivationTokenGenerator()
-#     is_activated = acct.check_token(user, token)
-#     if is_activated:
-#         user.is_active = True
-#         user.save()
-#     messages.success(request, "Account successfully activated!")
-#     return redirect("auth:login")
+def page_not_found(request, exception):
+    return render(request, 'error/404.html')
+
+def server_error(request, *args, **kwargs):
+    return render(request, 'error/500.html')

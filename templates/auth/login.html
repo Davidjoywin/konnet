@@ -6,13 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Authentication</title>
-  <link rel="stylesheet" href="{% static 'auth_style.css' %}">
+  <link rel="stylesheet" href="{% static 'auth/auth_style.css' %}">
+  <style>
+  </style>
 </head>
 <body>
   <header>
   </header>
   <div id="container">
     <main>
+      {% for message in messages %} 
+        <div id='alert'>{{ message }}</div>
+      {% endfor %}
       <h1 id="login">Login</h1>
       <form action="{% url 'auth:login' %}" method="post">
         {% csrf_token %} 
@@ -32,5 +37,11 @@
       </form>
     </main>
   </div>
+  <script>
+    const alert_message = document.querySelector('#alert');
+    setTimeout(() => {
+      alert_message.style.display = 'none'
+    }, 3000);
+  </script>
 </body>
 </html>

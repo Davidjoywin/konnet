@@ -1,0 +1,419 @@
+:root {
+  --body-font-color: #cfcaca;
+  --body-background-color: #030303;
+  --sender-background-color: #56b656;
+  --receiver-background-color: #1b5e1b;
+  --main-width: calc(97vw - 40vw - 3rem);
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------------start of layout----------------- */
+body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: #181616;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+body #body-container {
+  width: 97vw;
+  height: 97vh;
+  overflow: hidden;
+}
+
+header, nav, aside, main {
+  background: var(--body-background-color);
+}
+
+nav {
+  display: block;
+}
+
+header {
+  display: flex;
+  width: 100%;
+  height: 10%;
+  margin-bottom: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#container {
+  display: grid;
+  grid-template-columns: 20vw auto 20vw;
+  gap: 1.5rem;
+  height: 89%;
+}
+
+/* -------------end of the layout---------------- */
+button {
+  cursor: pointer;
+}
+
+#burger-button {
+  display: none;
+}
+
+#app-name {
+  margin-left: 2rem;
+  color: var(--body-font-color);
+  align-self: flex-end;
+  background: inherit;
+  font-size: 2rem;
+  align-self: center;
+}
+
+#app-name a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#auth {
+  color: var(--body-font-color);
+  font-size: 2rem;
+  margin-right: 2rem;
+}
+
+#auth a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-item {
+  margin: 1rem;
+  padding: 1rem;
+  font-size: 2rem;
+  border-radius: 1.5rem;
+}
+
+.nav-item:hover, .nav-item:active {
+  background: #181616;
+}
+
+.nav-item a {
+  display: flex;
+  justify-content: space-between;
+  color: var(--body-font-color);
+  text-decoration: none;
+}
+
+.notify-no {
+  font-size: 1.5rem;
+  padding: .2rem;
+  align-self: center;
+  background: red;
+  border-radius: 2rem;
+}
+
+/* -----------main----------- */
+#main {
+  position: relative;
+}
+
+#profile-info {
+  display: flex;
+  padding: 1rem;
+  font-size: 2rem;
+  color: var(--body-font-color);
+  border-bottom: solid;
+  border-color: #181616;
+  align-items: center;
+  justify-content: space-between;
+}
+
+img {
+  width: 5rem;
+  height: 5rem;
+  font-size: 5px;
+  background: black;
+  border-radius: 50%;
+}
+
+#profile {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+#profile #username {
+  text-align:justify;
+}
+
+#chat-message {
+  display: flex;
+  height: 65vh;
+  background: inherit;
+  flex-direction: column;
+  font-size: 2rem;
+  color: var(--body-font-color);
+  overflow-y: auto;
+}
+
+#chat-message::-webkit-scrollbar{
+  width: 0;
+}
+
+.sender {
+  width: fit-content;
+  max-width: 70%;
+  padding: .5rem;
+  margin: 1rem 0 1rem 1rem;
+  border-radius: 0 1rem 1rem 1rem;
+  background: var(--sender-background-color);
+}
+
+.receiver {
+  padding: .5rem;
+  margin: 1rem 1rem 1rem 0;
+  border-radius: 1rem 1rem 0 1rem;
+  align-self: flex-end;
+  max-width: 70%;
+  background: var(--receiver-background-color);
+}
+
+#chat-form {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  bottom: 1rem;
+  gap: 2rem;
+  width: calc(97vw - 40vw - 3rem);
+  background: inherit;
+  /* background: inherit; */
+  padding: 1rem 0 1rem 0;
+}
+
+#chat-form input {
+  color: var(--body-font-color);
+  background: #181616;
+  height: 4.5rem;
+}
+
+input[type=text] {
+  width: 70%;
+  border-radius: 2rem;
+  border: none;
+  padding: 0 2rem 0 2rem;
+  font-size: 3rem;
+}
+
+input[type=text]:focus {
+  border-style: none;
+}
+
+input[type=submit] {
+  width: 5rem;
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 2rem;
+}
+/* -------------end------------ */
+
+/* ---------------friend page - to list all the friends ------------ */
+#friend-search {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  background: inherit;
+  justify-content: center;
+}
+
+#friend-search input[type=text] {
+  width: minmax(50%, 75%);
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-style: normal;
+}
+
+#friend-search input[type=submit] {
+  width: fit-content;
+  padding: 0 1rem;
+}
+
+#friend-list::-webkit-scrollbar{
+  width: 0;
+}
+
+#friend-list {
+  height: calc(90vh - 13%);
+  background: inherit;
+  overflow-x: hidden;
+  overflow-y: scroll;
+
+  .friend {
+    display: flex;
+    justify-content: space-between;
+    margin-top: .5rem;
+    width: var(--main-width);
+    height: fit-content;
+    background: inherit;
+    padding: .5rem 1rem;
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: var(--body-font-color);
+
+    .friend-profile {
+      display: flex;
+      gap: 2rem;
+    }
+  }
+  
+  .profile-link {
+    font-size: 2rem;
+    text-decoration: none;
+  }
+  
+  .profile-name {
+    color: var(--body-font-color);
+  }
+
+  .profile-username {
+    color: rgb(182, 159, 159)
+  }
+
+  .profile-shortcut {
+    display: flex;
+    align-self: center;
+    justify-self: flex-end;
+    width: 3rem;
+    height: 3rem;
+    background: inherit;
+    border:#cfcaca;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-shortcut div {
+    position: relative;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--body-font-color);
+      justify-self: flex-end;
+    }
+
+    .profile-shortcut div:before {
+      content: '';
+      position: absolute;
+      width: inherit;
+      height: inherit;
+      background: inherit;
+      left: -1rem;
+      border: none;
+      border-radius: 50%
+    }
+  
+    .profile-shortcut div:after {
+      content: '';
+      position: absolute;
+      width: inherit;
+      height: inherit;
+      left: 1rem;
+      background: inherit;
+      border: none;
+      border-radius: 50%;
+    }
+
+}
+
+/* -----------------friend page ends here---------------- */
+
+@media screen and (max-width: 900px) {
+  #left-header {
+    display: flex;
+    gap: 1rem;
+  }
+
+  #app-name {
+    margin-left: 0;
+  }
+
+  #burger-button {
+    display: flex;
+    border: none;
+    /* align-self: center; */
+    width: 6rem;
+    height: 6rem;
+    background: inherit;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #burger-button:hover {
+    background: blue;
+    border-radius: 50%;
+  }
+
+  #burger {
+    position: relative;
+    width: 3.5rem;
+    background: var(--body-font-color);
+    height: .5rem;
+  }
+
+  #burger::before {
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    left: 0;
+    top: -1rem;
+    background: inherit;
+  }
+
+  #burger::after {
+    content: '';
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    background: inherit;
+    left: 0;
+    top: 1rem;
+  }
+
+  nav {
+    position: absolute;
+    display: none;
+    width: fit-content;
+    padding-bottom: 10rem;
+    background: var(--body-background-color);
+  }
+
+  aside {
+    display: none;
+  }
+
+  #container {
+    position: relative;
+    grid-template-columns: 100%;
+  }
+
+  #chat-form {
+    width: 100%;
+  }
+
+  /* ---------------friend page - to list all the friends ------------ */
+
+  #friend-list .friend {
+    width: 100%;
+  }
+
+  #friend-list .friend button {
+    margin-right: 2rem;
+  }
+
+  /* -----------end of friend page---------------- */
+}

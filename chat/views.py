@@ -6,9 +6,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
-from .models import Friend, ChatGroup, Message
+from .models import Friend, Profile, ChatGroup, Message
 
-@login_required
+@login_required()
 def home(request):
     user = request.user.friend
     
@@ -22,17 +22,11 @@ def home(request):
         'friends': friend_chat
     }
 
-    return render(request, 'chats/home.html', context)
+    return render(request, 'friends/list_friends.html', context)
 
 @login_required
 def chat_friends(request, profile):
     user = request.user
-
-    # message = request.POST.get('post')
-
-    # sent_messages = Message.objects.filter(sender=user, receiver=friend).order_by('sent_at')
-
-    # received_messages = Message.objects.filter(sender=friend, receiver=user).order_by('sent_at')
 
     friend_profile = User.objects.get(username=profile).profile
 
@@ -43,7 +37,7 @@ def chat_friends(request, profile):
     )
 
     if request.method == 'POST':
-        text = request.POST.get('message')
+        text = request.POST.get('msg')
         Friend.send_message(sent_from=user, sent_to=friend_profile, text=text)
         return redirect(reverse('chat:chat_friend', args=(friend_profile, )))
 
@@ -52,7 +46,7 @@ def chat_friends(request, profile):
         'messages': messages.order_by('sent_at')
     }
 
-    return render(request, 'chats/chat.html', context)
+    return render(request, 'chats/home.html', context)
 
 def friends(request):
     friend = request.user.friend
@@ -67,7 +61,7 @@ def friends(request):
         'new_friends': new_friends
     }
 
-    return render(request, 'chats/friends.html', context)
+    return render(request, 'friends/list_friends.html', context)
 
 def list_friends(request):
     return HttpResponse('')
@@ -107,5 +101,5 @@ def get_groups(requests):
         'groups': groups
     }
 
-
+    return JsonResponse(context)
 

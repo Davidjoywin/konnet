@@ -1,11 +1,18 @@
-<!DOCTYPE html>
+{% extends 'base/base.html' %} 
+
+{% block head %} 
+{% load static %} 
+<link rel="stylesheet" href="{% static 'chats/home_style.css' %}">
+{% endblock %}
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load static %} 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const burger_bttn = document.getElementById('burger-button');
@@ -19,14 +26,22 @@
         }
       });
 
-      // console.log(document);
+      const chat_message = document.querySelector('#chat-message');
+      // scroll to the bottom of the chat messages
+      chat_message.scrollTo(0, chat_message.scrollHeight);
+
+      console.log(document);
       
       // document.querySelector('ht').addEventListener('click', () => {
       //   const nav = document.querySelector('nav');
       //   if (getComputedStyle(nav).display == 'block') {
       //     nav.style.display = 'none';
       //   }
-      // })
+      // // })
+
+      // const main = document.querySelector('main');
+      // let chat_form = document.querySelector('#chat-form');
+      // chat_form.style.width = getComputedStyle(main).width;;
     })
 
 
@@ -63,7 +78,7 @@
         </div>
 
         <div class="nav-item">
-          <a href="">
+          <a href="{% url 'chat:friends' %}">
             <span>Friends</span><span class="notify-no">99</span>
           </a>
         </div>
@@ -139,4 +154,36 @@
     </div>
   </div>
 </body>
-</html>
+</html> -->
+
+
+{% block main %} 
+<div id="profile-info">
+  <div id="profile">
+    <img src="./blank-profile-pics.png" alt="blank pics">
+    <div id="username">{{ friend_profile.user.username }}</div>
+  </div>
+
+  <button id="burger-button">
+    <div id="burger"></div>
+  </button>
+</div>
+
+<div id="chat-message">
+  {% for msg in messages %}
+  {% if msg.sender == user %}
+  <div class="sender">{{ msg.text }}</div>
+  {% endif %} 
+  {% if msg.sender == friend_profile.user %}
+  <div class="receiver">{{ msg.text }}</div>
+  {% endif %} 
+  {% endfor %} 
+</div>
+
+<form action="{% url 'chat:chat_friend' friend_profile.user.username %}" id="chat-form" method="post">
+  {% csrf_token %} 
+  <input type="text" name="msg">
+  <input type="submit" value="send">
+</form>
+
+{% endblock %} 

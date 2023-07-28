@@ -55,6 +55,10 @@ h1 {
   font-size: 4rem;
 }
 
+#alert {
+  color: red;
+}
+
 #login {
   margin-top: 4rem;
 }
