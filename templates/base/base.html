@@ -9,9 +9,9 @@
     {% block title %}
     {% endblock %}
   </title>
-  <link rel="stylesheet" href="{% static 'base_style.css' %}">
-  {% block head %} 
-  {% endblock %} 
+  <link rel="stylesheet" href="{% static 'base/base_style.css' %}">
+  {% block custom-style %}
+  {% endblock %}
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const burger_bttn = document.getElementById('burger-button');
