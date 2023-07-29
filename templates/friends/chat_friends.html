@@ -23,8 +23,8 @@
         <img src="{% static 'blank-profile-pics.png' %}" alt="blank profile pics">
       </a>
       <a href="{% url 'chat:chat_friend' friend %}" class="profile-link">
-        <span class="profile-name">{{ friend.user.first_name }} {{ friend.user.last_name }}</span>
-        <span class="profile-username">@{{ friend.user.username }}</span>
+        <span class="profile-name">{{ friend.first_name }} {{ friend.user.last_name }}</span>
+        <span class="profile-username">@{{ friend.username }}</span>
       </a>
     </div>
     <button class="profile-shortcut">

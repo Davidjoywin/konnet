@@ -139,7 +139,7 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Login required
 LOGIN_URL='auth:login'
-LOGIN_REDIRECT_URL='chat:home'
+LOGIN_REDIRECT_URL='post:home'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

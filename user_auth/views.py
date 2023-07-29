@@ -7,8 +7,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import tokens
 from django.contrib.auth import login, logout, authenticate
 
-def index(request):
-    return redirect("chat:home")
 
 def register(request):
     if request.method == 'POST':
@@ -38,7 +36,7 @@ def register(request):
         user.save()
 
         login(request, user)
-        return redirect('chat:home')  
+        return redirect('post:home')  
     return render(request, 'auth/signup.html')
 
 def auth_login(request):
@@ -50,7 +48,7 @@ def auth_login(request):
 
         if user:
             login(request, user)
-            return redirect("chat:home")
+            return redirect("post:home")
         # return redirect("auth:not-active")
         else:
             messages.add_message(request, messages.ERROR, "Username or Password incorrect!")
@@ -59,8 +57,8 @@ def auth_login(request):
 def auth_logout(request):
     if request.user.is_authenticated:
         logout(request)
-        return redirect("auth:index")
-    return redirect("auth:index")
+        return redirect("auth:login")
+    return redirect("auth:login")
 
 def page_not_found(request, exception):
     return render(request, 'error/404.html')

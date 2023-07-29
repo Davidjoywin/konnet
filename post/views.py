@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+
+def home(request):
+    return HttpResponse("Post timeline")
+
 def profile(request):
     user_profile = request.user.profile
     
@@ -9,6 +13,3 @@ def profile(request):
     }
 
     return render(request, 'profile/user-profile.html', context)
-
-def timeline(request):
-    return HttpResponse("Post timeline")
