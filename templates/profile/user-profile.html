@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+
+  {% block custom-style %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'profile/user-profile.css' %}">
+  {% endblock %}
+  {% block main %}
+    <div id="profile-container">
+      <div id="profile-cover-img">
+        <img src="{% static 'blank-profile-pics.png' %}" alt="" id="profile-cover">
+        <a href="" id="profile-img-link">
+          <img src="{% static 'blank-profile-pics.png' %}" alt="" id="profile-img">
+        </a>
+      </div>
+
+      <div id="profile-details">
+        <div id="profile-name-username">
+          <h2>David Joy</h2>
+          <span>@davidjoy</span>
+        </div>
+
+        <div id="profile-bio">
+          <p>Write code day and night</p>
+          <div id="dob-date-joined">
+            <span>20 September 2000</span>
+            <span>Joined November 2019</span>
+          </div>
+          
+          <div id="follower-following">
+            <span><b>100</b> following</span>
+            <span><b>1000</b> followers</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="post-container">
+        <div class="user-post">
+          <img src="{% static 'blank-profile-pics.png' %}" alt="">
+          <div class="post-user-name-container">
+            <div class="user-name">
+              <span>David</span>
+              <span>@davidjoy</span>
+            </div>
+            <div class="post">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo animi laborum provident, cupiditate similique non enim excepturi id quibusdam magnam ad, corporis illo suscipit fuga vitae, exercitationem nulla? Impedit, velit!</div>
+          </div>
+        </div>
+
+        <div class="user-post">
+          <img src="{% static 'blank-profile-pics.png' %}" alt="">
+          <div class="post-user-name-container">
+            <div class="user-name">
+              <span>David</span>
+              <span>@davidjoy</span>
+            </div>
+            <div class="post">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo animi laborum provident, cupiditate similique non enim excepturi id quibusdam magnam ad, corporis illo suscipit fuga vitae, exercitationem nulla? Impedit, velit!</div>
+          </div>
+        </div>
+
+        <div class="user-post">
+          <img src="{% static 'blank-profile-pics.png' %}" alt="">
+          <div class="post-user-name-container">
+            <div class="user-name">
+              <span>David</span>
+              <span>@davidjoy</span>
+            </div>
+            <div class="post">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo animi laborum provident, cupiditate similique non enim excepturi id quibusdam magnam ad, corporis illo suscipit fuga vitae, exercitationem nulla? Impedit, velit!</div>
+          </div>
+        </div>
+
+        <div class="user-post">
+          <img src="{% static 'blank-profile-pics.png' %}" alt="">
+          <div class="post-user-name-container">
+            <div class="user-name">
+              <span>David</span>
+              <span>@davidjoy</span>
+            </div>
+            <div class="post">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo animi laborum provident, cupiditate similique non enim excepturi id quibusdam magnam ad, corporis illo suscipit fuga vitae, exercitationem nulla? Impedit, velit!</div>
+          </div>
+        </div>
+
+        <div class="user-post">
+          <img src="{% static 'blank-profile-pics.png' %}" alt="">
+          <div class="post-user-name-container">
+            <div class="user-name">
+              <span>David</span>
+              <span>@davidjoy</span>
+            </div>
+            <div class="post">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo animi laborum provident, cupiditate similique non enim excepturi id quibusdam magnam ad, corporis illo suscipit fuga vitae, exercitationem nulla? Impedit, velit!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}

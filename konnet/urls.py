@@ -12,10 +12,9 @@ urlpatterns = [
     path("favivon.ico", RedirectView.as_view(url="blank_profile_pics.png")),
     path('__reload__/', include("django_browser_reload.urls")),
     path('admin/', admin.site.urls),
-    path('', views.index),
     path('chat/', include('chat.urls')),
     path('auth/', include('user_auth.urls')),
-    path('post/', include('post.urls')),
+    path('', include('post.urls')),
 ]
 
 handler404 = 'user_auth.views.page_not_found'

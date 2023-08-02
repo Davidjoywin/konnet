@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Friend, Profile, ChatGroup, Message
 
 @login_required()
-def home(request):
+def home_chat(request):
     user = request.user.friend
     
     friend_chat = [
@@ -22,13 +22,17 @@ def home(request):
         'friends': friend_chat
     }
 
-    return render(request, 'friends/list_friends.html', context)
+    return render(request, 'friends/chatted_friends.html', context)
 
 @login_required
 def chat_friends(request, profile):
     user = request.user
 
+    print(profile)
+    
     friend_profile = User.objects.get(username=profile).profile
+
+    print(type(friend_profile.user))
 
     messages = Message.objects.filter((Q(sender=user)&
                                        Q(receiver=friend_profile)) |
@@ -48,6 +52,7 @@ def chat_friends(request, profile):
 
     return render(request, 'chats/home.html', context)
 
+@login_required
 def friends(request):
     friend = request.user.friend
     friend_list = friend.friend_list.all()
@@ -61,10 +66,20 @@ def friends(request):
         'new_friends': new_friends
     }
 
-    return render(request, 'friends/list_friends.html', context)
+    return HttpResponse()
+
+    # return render(request, 'friends/list_friends.html', context)
 
 def list_friends(request):
-    return HttpResponse('')
+    friend = request.user.friend
+    friend_list = friend.friend_list.all()
+
+    context = {
+        'friends': friend_list
+    }
+
+    return render(request, 'friends/list_friends.html', context)
+    
 
 def get_unreads(request):
     user_authenticated = request.user
