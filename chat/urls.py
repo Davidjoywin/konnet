@@ -5,7 +5,7 @@ from . import views
 
 app_name='chat'
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.home_chat, name='home'),
     path('friends', views.list_friends, name='friends'),
     path('<str:profile>', views.chat_friends, name='chat_friend'),
     path('add-friend/<int:friend>', views.add_new_friends, name='add_friends'),
