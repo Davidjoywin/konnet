@@ -296,7 +296,7 @@ input[type=submit] {
     align-items: center;
   }
   
-  .profile-shortcut div {
+  .profile-shortcut #menu-bar {
     position: relative;
       width: 5px;
       height: 5px;
@@ -305,7 +305,7 @@ input[type=submit] {
       justify-self: flex-end;
     }
 
-    .profile-shortcut div:before {
+    .profile-shortcut #menu-bar:before {
       content: '';
       position: absolute;
       width: inherit;
@@ -316,7 +316,7 @@ input[type=submit] {
       border-radius: 50%
     }
   
-    .profile-shortcut div:after {
+    .profile-shortcut #menu-bar:after {
       content: '';
       position: absolute;
       width: inherit;

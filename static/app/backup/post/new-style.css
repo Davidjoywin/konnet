@@ -1,0 +1,52 @@
+/* ---------------other style-------------- */
+
+
+#post-list {
+  display: flex;
+  height: 78vh;
+  flex-direction: column;
+  gap: 2rem;
+  color: var(--body-font-color);
+  margin: 2rem;
+  font-size: 2rem;
+  background: inherit;
+  overflow: auto;
+  /* border: 2px solid var(--body-font-color) */
+}
+
+#post-list::-webkit-scrollbar {
+  width: 0;
+}
+
+.post-profile {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.profile-link {
+  color: var(--body-font-color);
+  text-decoration: none;
+}
+
+.posts {
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--body-font-color);
+}
+
+.reactions {
+  display: flex;
+  padding: 1rem 0;
+  justify-content: space-around;
+  border-bottom: 2px solid var(--body-font-color);
+}
+
+.reactions span a {
+  color: var(--body-font-color);
+  text-decoration: none;
+}
+
+.reactions span a:hover,
+.reactions span a:active {
+  color: #002fff
+}

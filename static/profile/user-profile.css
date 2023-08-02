@@ -3,6 +3,7 @@
   --body-background-color: #030303;
   --sender-background-color: #56b656;
   --receiver-background-color: #1b5e1b;
+  --main-width: calc(97vw - 40vw - 3rem);
 }
 
 html {
@@ -14,6 +15,7 @@ html {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 /* ---------------start of layout----------------- */
@@ -122,105 +124,125 @@ button {
   position: relative;
 }
 
-#profile-info {
-  display: flex;
-  padding: 1rem;
-  font-size: 2rem;
-  color: var(--body-font-color);
-  border-bottom: solid;
-  border-color: #181616;
-  align-items: center;
-  justify-content: space-between;
+/* -------------user profile--------------- */
+#profile-container {
+  width: 100%;
+  height: calc(100vh - 4rem - 10%);
+  overflow: auto;
+  background: var(--body-background-color);
+  z-index: 3;
 }
 
-img {
-  width: 5rem;
-  height: 5rem;
-  font-size: 5px;
-  background: black;
-  border-radius: 50%;
-}
-
-#profile {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-#profile #username {
-  text-align:justify;
-}
-
-#chat-message {
-  display: flex;
-  height: 65vh;
-  background: inherit;
-  flex-direction: column;
-  font-size: 2rem;
-  color: var(--body-font-color);
-  overflow-y: auto;
-}
-
-#chat-message::-webkit-scrollbar{
+#profile-container::-webkit-scrollbar {
   width: 0;
 }
 
-.sender {
-  width: fit-content;
-  max-width: 70%;
-  padding: .5rem;
-  margin: 1rem 0 1rem 1rem;
-  border-radius: 0 1rem 1rem 1rem;
-  background: var(--sender-background-color);
+#profile-cover-img {
+  position: relative;
+  width: 100%;
+  height: 20rem;
 }
 
-.receiver {
-  padding: .5rem;
-  margin: 1rem 1rem 1rem 0;
-  border-radius: 1rem 1rem 0 1rem;
-  align-self: flex-end;
-  max-width: 70%;
-  background: var(--receiver-background-color);
-}
-
-#chat-form {
+#profile-cover {
   position: absolute;
+  width: 100%;
+  height: 35vh;
+  border-radius: 0 !important;
+}
+
+#profile-img-link {
   display: flex;
-  justify-content: center;
-  bottom: 1rem;
-  gap: 2rem;
-  width: calc(97vw - 40vw - 3rem );
-  background: inherit;
-  /* background: inherit; */
-  padding: 1rem 0 1rem 0;
-}
-
-#chat-form input {
-  color: var(--body-font-color);
-  background: #181616;
-  height: 4.5rem;
-}
-
-input[type=text] {
-  width: 70%;
-  border-radius: 2rem;
-  border: none;
-  padding: 0 2rem 0 2rem;
-  font-size: 3rem;
-  background: #181616;
-}
-
-input[type=text]:focus {
-  border-style: none;
-}
-
-input[type=submit] {
   width: 5rem;
-  border: none;
-  font-size: 1.5rem;
-  border-radius: 2rem;
+  height: 5rem;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  border-radius: 50%;
+  top: 30vh;
+  left: 2rem;
+  border: 4px solid green;
+  box-sizing: content-box;
+  padding: 4px;
+  background: black;
 }
-/* -------------end------------ */
+
+#profile-img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+}
+
+#profile-details {
+  position: relative;
+  top: 15vh;
+  width: 100%;
+  height: 35vh;
+  padding: 2rem;
+  color: var(--body-font-color);
+  /* background: red; */
+  font-size: 2rem
+}
+
+#profile-bio {
+  margin-top: 2rem;
+  border-bottom: 1px solid var(--body-font-color);
+}
+
+#dob-date-joined {
+  display: flex;
+  font-size: 1.5rem;
+  gap: 3rem;
+}
+
+#follower-following,
+#dob-date-joined {
+  margin-top: 2rem;
+}
+
+#follower-following span {
+  font-size: 1.5rem;
+}
+
+#follower-following span b {
+  font-size: 2rem;
+}
+
+/* --------------end of user profile---------------- */
+
+#post-container {
+  position: relative;
+  top: 6vh;
+  padding: 0 2rem;
+  background: var(--body-background-color);
+  color: var(--body-font-color);
+  font-size: 2rem;
+  z-index: 1;
+}
+
+.user-post {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+  border-bottom: 2px solid var(--body-font-color);
+}
+
+/* .post-user-name-container {
+
+} */
+
+.user-post img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.user-post .post {
+  font-size: 1.5rem;
+}
+/*------------end of main--------*/
+
+
+/* -----------------friend page ends here---------------- */
 
 @media screen and (max-width: 900px) {
   #left-header {
@@ -281,6 +303,7 @@ input[type=submit] {
     width: fit-content;
     padding-bottom: 10rem;
     background: var(--body-background-color);
+    z-index: 1;
   }
 
   aside {

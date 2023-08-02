@@ -298,6 +298,7 @@ input[type=submit] {
   
   .profile-shortcut div {
     position: relative;
+    display: none;
       width: 5px;
       height: 5px;
       border-radius: 50%;
@@ -327,6 +328,23 @@ input[type=submit] {
       border-radius: 50%;
     }
 
+    /* ---------------dropdown for friends-------------*/
+    .profile-shortcut .follow-bttn {
+      padding: 1rem;
+    }
+
+    .profile-shortcut .follow-bttn a {
+      font-size: 2rem;
+      text-decoration: none;
+      color: var(--body-font-color)
+    }
+
+    .profile-shortcut .follow-bttn a:hover {
+      color: red;
+    }
+
+
+    /* -----------end of dropdown for friends--------------- */
 }
 
 /* -----------------friend page ends here---------------- */

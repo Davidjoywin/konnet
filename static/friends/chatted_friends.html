@@ -1,11 +1,13 @@
 {% extends 'base/base.html' %}
 
-{% load static %}
+{% block custom-style %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'friends/friend_list_style.css' %}">
+{% endblock %}
 
 {% block title %}
   Friends
 {% endblock %}
-
 
 {% block main %}
 <form action="#" id="friend-search">
@@ -17,19 +19,16 @@
   {% for friend in friends %}
   <div class="friend">
     <div class="friend-profile">
-      <a href="{% url 'post:friend-profile' friend.user %}" class="avatar-link">
+      <a href="" class="avatar-link">
         <img src="{% static 'blank-profile-pics.png' %}" alt="blank profile pics">
       </a>
-      <a href="{% url 'chat:chat_friend' friend.user.username %}" class="profile-link">
-        <span class="profile-name">{{ friend.user.first_name }} {{ friend.user.last_name }}</span>
-        <span class="profile-username">@{{ friend.user.username }}</span>
+      <a href="{% url 'chat:chat_friend' friend %}" class="profile-link">
+        <span class="profile-name">{{ friend.first_name }} {{ friend.last_name }}</span>
+        <span class="profile-username">@{{ friend.username }}</span>
       </a>
     </div>
     <button class="profile-shortcut">
-      <div id="menu-bar"></div><br>
-      <span id="dropdown">
-        <a href="">Pr</a>
-      </span>
+      <div></div>
     </button>
   </div>
   {% endfor %}

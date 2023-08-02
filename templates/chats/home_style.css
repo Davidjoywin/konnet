@@ -207,6 +207,7 @@ input[type=text] {
   border: none;
   padding: 0 2rem 0 2rem;
   font-size: 3rem;
+  background: #181616;
 }
 
 input[type=text]:focus {

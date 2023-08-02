@@ -15,6 +15,7 @@ html {
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 /* ---------------start of layout----------------- */
@@ -123,28 +124,44 @@ button {
   position: relative;
 }
 
-#profile-cover {
+/* -------------user profile--------------- */
+#profile-container {
+  width: 100%;
+  height: calc(100vh - 4rem - 10%);
+  overflow: auto;
+  background: var(--body-background-color);
+  z-index: 3;
+}
+
+#profile-container::-webkit-scrollbar {
+  width: 0;
+}
+
+#profile-cover-img {
   position: relative;
   width: 100%;
   height: 20rem;
 }
-#profile-cover-img {
+
+#profile-cover {
   position: absolute;
   width: 100%;
-  height: 20rem;
+  height: 35vh;
 }
 
 #profile-img-link {
   display: flex;
-  width: 6rem;
-  height: 6rem;
+  width: 5rem;
+  height: 5rem;
   align-items: center;
   justify-content: center;
   position: absolute;
   border-radius: 50%;
-  top: 18rem;
-  left: 4rem;
-  border: 5px solid green;
+  top: 30vh;
+  left: 2rem;
+  border: 4px solid green;
+  box-sizing: content-box;
+  padding: 4px;
   background: black;
 }
 
@@ -152,6 +169,74 @@ button {
   width: 5rem;
   height: 5rem;
   border-radius: 50%;
+}
+
+#profile-details {
+  position: relative;
+  top: 15vh;
+  width: 100%;
+  height: 35vh;
+  padding: 2rem;
+  color: var(--body-font-color);
+  /* background: red; */
+  font-size: 2rem
+}
+
+#profile-bio {
+  margin-top: 2rem;
+  border-bottom: 1px solid var(--body-font-color);
+}
+
+#dob-date-joined {
+  display: flex;
+  font-size: 1.5rem;
+  gap: 3rem;
+}
+
+#follower-following,
+#dob-date-joined {
+  margin-top: 2rem;
+}
+
+#follower-following span {
+  font-size: 1.5rem;
+}
+
+#follower-following span b {
+  font-size: 2rem;
+}
+
+/* --------------end of user profile---------------- */
+
+#post-container {
+  position: relative;
+  top: 6vh;
+  padding: 0 2rem;
+  background: var(--body-background-color);
+  color: var(--body-font-color);
+  font-size: 2rem;
+  z-index: 1;
+}
+
+.user-post {
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+  border-bottom: 2px solid var(--body-font-color);
+}
+
+.post-user-name-container {
+
+}
+
+.user-post img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+}
+
+.user-post .post {
+  font-size: 1.5rem;
 }
 /*------------end of main--------*/
 
@@ -217,6 +302,7 @@ button {
     width: fit-content;
     padding-bottom: 10rem;
     background: var(--body-background-color);
+    z-index: 1;
   }
 
   aside {

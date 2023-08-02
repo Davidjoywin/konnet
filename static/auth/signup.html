@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication</title>
+  <link rel="stylesheet" href="{% static 'auth/auth_style.css' %}">
+</head>
+<body>
+  <header>
+  </header>
+  <div id="container">
+    <main id="login-main">
+      <h1>Register</h1>
+      <form action="{% url 'auth:register' %}" method="post">
+        {% csrf_token %}
+        <div class="user-input">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" autocomplete="off" placeholder="Username" required>
+        </div>
+
+        <div class="user-input">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="off" placeholder="Email"required>
+        </div>
+
+        <div class="user-input">
+          <label for="fname">Full name</label>
+          <input type="text" id="fname" name="fname" autocomplete="off" placeholder="Full name" required>
+        </div>
+
+        <div class="user-input">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="off" placeholder="Password" required>
+        </div>
+
+        <div class="user-input">
+          <label for="verity-password">Verify password</label>
+          <input type="password" id="verify-password" name="verify-password" autocomplete="off" placeholder="Verify password" required>
+        </div>
+
+        <div class="user-input">
+          <label for="phone-no">Phone Number</label>
+          <input type="text" id="phone-no" name="phone-no" autocomplete="off" placeholder="Phone number" required>
+        </div>
+        <input id="submit" type="submit" value="Register">
+      
+        <div id="or-login"><a href="{% url 'auth:login' %}">Login</a></div>
+      </form>
+    </main>
+  </div>
+</body>
+</html>

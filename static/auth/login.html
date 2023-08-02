@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %} 
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication</title>
+  <link rel="stylesheet" href="{% static 'auth/auth_style.css' %}">
+  <style>
+  </style>
+</head>
+<body>
+  <header>
+  </header>
+  <div id="container">
+    <main>
+      {% for message in messages %} 
+        <div id='alert'>{{ message }}</div>
+      {% endfor %}
+      <h1 id="login">Login</h1>
+      <form action="{% url 'auth:login' %}" method="post">
+        {% csrf_token %} 
+        <div class="user-input">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Username or Email" autocomplete="off" required>
+        </div>
+
+        <div class="user-input">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Password" autocomplete="off" required>
+        </div>
+
+        <input id="submit" type="submit" value="Login">
+      
+        <div id="or-login"><a href="{% url 'auth:register' %}">Register</a></div>
+      </form>
+    </main>
+  </div>
+  <script>
+    const alert_message = document.querySelector('#alert');
+    setTimeout(() => {
+      alert_message.style.display = 'none'
+    }, 3000);
+  </script>
+</body>
+</html>
