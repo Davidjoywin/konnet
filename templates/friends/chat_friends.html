@@ -27,9 +27,7 @@
         <span class="profile-username">@{{ friend.username }}</span>
       </a>
     </div>
-    <button class="profile-shortcut">
-      <div></div>
-    </button>
+    {% include 'includes/follow.html' %}
   </div>
   {% endfor %}
   

@@ -25,12 +25,7 @@
         <span class="profile-username">@{{ friend.user.username }}</span>
       </a>
     </div>
-    <button class="profile-shortcut">
-      <div id="menu-bar"></div><br>
-      <span id="dropdown">
-        <a href="">Pr</a>
-      </span>
-    </button>
+    {% include 'includes/frnd-menu-bttn.html' %}
   </div>
   {% endfor %}
   

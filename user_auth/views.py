@@ -12,7 +12,7 @@ def register(request):
     if request.method == 'POST':
         full_name = request.POST.get('fname')
         email=request.POST.get("email")
-        username=request.POST.get("username")
+        username=request.POST.get("username").lower()
         password1=request.POST.get("password")
         password2=request.POST.get("verify-password")
 
@@ -41,7 +41,7 @@ def register(request):
 
 def auth_login(request):
     if request.method == 'POST':
-        username=request.POST.get("username")
+        username=request.POST.get("username").lower()
         password=request.POST.get("password")
         
         user=authenticate(request, username=username, password=password)
@@ -49,7 +49,6 @@ def auth_login(request):
         if user:
             login(request, user)
             return redirect("post:home")
-        # return redirect("auth:not-active")
         else:
             messages.add_message(request, messages.ERROR, "Username or Password incorrect!")
     return render(request, "auth/login.html")
