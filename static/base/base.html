@@ -10,6 +10,7 @@
     {% endblock %}
   </title>
   <link rel="stylesheet" href="{% static 'base/base_style.css' %}">
+  <link rel="stylesheet" href="{% static 'includes/include-styling.css' %}">
   {% block custom-style %}
   {% endblock %}
   <script>
@@ -85,7 +86,7 @@
         </div>
 
         <div class="nav-item">
-          <a href="">
+          <a href="{% url 'chat:friend-requests' %}">
             <span>Friend Requests</span><span class="notify-no">99</span>
           </a>
         </div>
@@ -101,4 +102,5 @@
     </div>
   </div>
 </body>
+<script src="{% static 'includes/follow.js' %}"></script>
 </html>

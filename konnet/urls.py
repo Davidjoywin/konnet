@@ -20,3 +20,15 @@ urlpatterns = [
 handler404 = 'user_auth.views.page_not_found'
 
 handler500 = 'user_auth.views.server_error'
+
+
+# import time
+# import threading
+
+# def test():
+#     while True:
+#         time.sleep(10)
+#         print("hello world")
+    
+# t1 = threading.Thread(target=test)
+# t1.start()

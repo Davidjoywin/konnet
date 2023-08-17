@@ -10,6 +10,9 @@ from .models import Friend, Profile, ChatGroup, Message
 
 @login_required()
 def home_chat(request):
+    """
+    List friends chatted with
+    """
     user = request.user.friend
     
     friend_chat = [
@@ -26,6 +29,9 @@ def home_chat(request):
 
 @login_required
 def chat_friends(request, profile):
+    """
+    Chat interface to chat friends
+    """
     user = request.user
 
     print(profile)
@@ -54,6 +60,9 @@ def chat_friends(request, profile):
 
 @login_required
 def friends(request):
+    """
+    List friends. People who are already friends
+    """
     friend = request.user.friend
     friend_list = friend.friend_list.all()
     new_friends = [i
@@ -109,7 +118,7 @@ def add_new_friends(request, friend):
     Friend.add_friend(request.user, friend)
     return redirect('/')
 
-def get_groups(requests):
+def get_groups(request):
     groups = ChatGroup.list_groups()
 
     context = {
@@ -118,3 +127,13 @@ def get_groups(requests):
 
     return JsonResponse(context)
 
+@login_required
+def whats(request):
+    user = Profile.objects.get(user=request.user)
+    get_all_friend_req = [friend.user.profile for friend in user.friend_set.all()]
+    
+    context = {
+        'friend_request': get_all_friend_req
+    }
+
+    return render(request, 'friends/friend_req.html', context)

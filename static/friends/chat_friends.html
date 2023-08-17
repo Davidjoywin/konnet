@@ -1,12 +1,48 @@
-<!DOCTYPE html>
+{% extends 'base/base.html' %}
+
+{% block custom-style %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'friends/friend_list_style.css' %}">
+{% endblock %}
+
+{% block title %}
+  Friends
+{% endblock %}
+
+{% block main %}
+<form action="#" id="friend-search">
+  <input type="text">
+  <input type="submit" value="search">
+</form>
+
+<div id="friend-list">
+  {% for friend in friends %}
+  <div class="friend">
+    <div class="friend-profile">
+      <a href="" class="avatar-link">
+        <img src="{% static 'blank-profile-pics.png' %}" alt="blank profile pics">
+      </a>
+      <a href="{% url 'chat:chat_friend' friend %}" class="profile-link">
+        <span class="profile-name">{{ friend.first_name }} {{ friend.user.last_name }}</span>
+        <span class="profile-username">@{{ friend.username }}</span>
+      </a>
+    </div>
+    {% include 'includes/follow.html' %}
+  </div>
+  {% endfor %}
+  
+</div>
+{% endblock %}
+
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
+  {% load static %} 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./new-style.css">
+  <link rel="stylesheet" href="{% static 'style_friend_list.css' %}">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const burger_bttn = document.getElementById('burger-button');
@@ -29,6 +65,7 @@
       //   }
       // })
     })
+
 
   </script>
 </head>
@@ -76,25 +113,14 @@
       </nav>
   
       <main>
-        <style>
-          textarea {
-            width: 100%;
-            height: 5rem;
-            font-size: 4rem;
-            background: #040404;
-            color: white;
-            overflow: hidden;
-          }
-        </style>
         <form action="#" id="friend-search">
-          <!-- <input type="text"> -->
-          <textarea name="" id="" cols="30" rows="10"></textarea>
-          <input type="submit" value="Post">
+          <input type="text">
+          <input type="submit" value="search">
         </form>
-        
-        <div id="post-list">
-          <div class="post">
-            <div class="post-profile">
+
+        <div id="friend-list">
+          <div class="friend">
+            <div class="friend-profile">
               <a href="" class="avatar-link">
                 <img src="./blank-profile-pics.png" alt="blank profile pics">
               </a>
@@ -102,20 +128,14 @@
                 <span class="profile-name">David</span>
                 <span class="profile-username">@davidjoy</span>
               </a>
-              <span>.</span>
-              <span>17hrs</span>
             </div>
-            <div class="posts">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit repellendus recusandae explicabo, voluptatem non ipsam minima reprehenderit earum odio debitis porro, deleniti id facilis. Dicta sint enim autem esse cum.
-            </div>
-            <div class="reactions">
-              <span><a href="#">like</a></span>
-              <span><a href="#">comment</a></span>
-            </div>
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
           </div>
 
-          <div class="post">
-            <div class="post-profile">
+          <div class="friend">
+            <div class="friend-profile">
               <a href="" class="avatar-link">
                 <img src="./blank-profile-pics.png" alt="blank profile pics">
               </a>
@@ -123,20 +143,14 @@
                 <span class="profile-name">David</span>
                 <span class="profile-username">@davidjoy</span>
               </a>
-              <span>.</span>
-              <span>17hrs</span>
             </div>
-            <div class="posts">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit repellendus recusandae explicabo, voluptatem non ipsam minima reprehenderit earum odio debitis porro, deleniti id facilis. Dicta sint enim autem esse cum.
-            </div>
-            <div class="reactions">
-              <span><a href="#">like</a></span>
-              <span><a href="#">comment</a></span>
-            </div>
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
           </div>
 
-          <div class="post">
-            <div class="post-profile">
+          <div class="friend">
+            <div class="friend-profile">
               <a href="" class="avatar-link">
                 <img src="./blank-profile-pics.png" alt="blank profile pics">
               </a>
@@ -144,20 +158,14 @@
                 <span class="profile-name">David</span>
                 <span class="profile-username">@davidjoy</span>
               </a>
-              <span>.</span>
-              <span>17hrs</span>
             </div>
-            <div class="posts">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit repellendus recusandae explicabo, voluptatem non ipsam minima reprehenderit earum odio debitis porro, deleniti id facilis. Dicta sint enim autem esse cum.
-            </div>
-            <div class="reactions">
-              <span><a href="#">like</a></span>
-              <span><a href="#">comment</a></span>
-            </div>
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
           </div>
 
-          <div class="post">
-            <div class="post-profile">
+          <div class="friend">
+            <div class="friend-profile">
               <a href="" class="avatar-link">
                 <img src="./blank-profile-pics.png" alt="blank profile pics">
               </a>
@@ -165,20 +173,14 @@
                 <span class="profile-name">David</span>
                 <span class="profile-username">@davidjoy</span>
               </a>
-              <span>.</span>
-              <span>17hrs</span>
             </div>
-            <div class="posts">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit repellendus recusandae explicabo, voluptatem non ipsam minima reprehenderit earum odio debitis porro, deleniti id facilis. Dicta sint enim autem esse cum.
-            </div>
-            <div class="reactions">
-              <span><a href="#">like</a></span>
-              <span><a href="#">comment</a></span>
-            </div>
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
           </div>
 
-          <div class="post">
-            <div class="post-profile">
+          <div class="friend">
+            <div class="friend-profile">
               <a href="" class="avatar-link">
                 <img src="./blank-profile-pics.png" alt="blank profile pics">
               </a>
@@ -186,20 +188,14 @@
                 <span class="profile-name">David</span>
                 <span class="profile-username">@davidjoy</span>
               </a>
-              <span>.</span>
-              <span>17hrs</span>
             </div>
-            <div class="posts">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit repellendus recusandae explicabo, voluptatem non ipsam minima reprehenderit earum odio debitis porro, deleniti id facilis. Dicta sint enim autem esse cum.
-            </div>
-            <div class="reactions">
-              <span><a href="#">like</a></span>
-              <span><a href="#">comment</a></span>
-            </div>
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
           </div>
 
-          <div class="post">
-            <div class="post-profile">
+          <div class="friend">
+            <div class="friend-profile">
               <a href="" class="avatar-link">
                 <img src="./blank-profile-pics.png" alt="blank profile pics">
               </a>
@@ -207,20 +203,14 @@
                 <span class="profile-name">David</span>
                 <span class="profile-username">@davidjoy</span>
               </a>
-              <span>.</span>
-              <span>17hrs</span>
             </div>
-            <div class="posts">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit repellendus recusandae explicabo, voluptatem non ipsam minima reprehenderit earum odio debitis porro, deleniti id facilis. Dicta sint enim autem esse cum.
-            </div>
-            <div class="reactions">
-              <span><a href="#">like</a></span>
-              <span><a href="#">comment</a></span>
-            </div>
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
           </div>
 
-          <div class="post">
-            <div class="post-profile">
+          <div class="friend">
+            <div class="friend-profile">
               <a href="" class="avatar-link">
                 <img src="./blank-profile-pics.png" alt="blank profile pics">
               </a>
@@ -228,16 +218,40 @@
                 <span class="profile-name">David</span>
                 <span class="profile-username">@davidjoy</span>
               </a>
-              <span>.</span>
-              <span>17hrs</span>
             </div>
-            <div class="posts">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit repellendus recusandae explicabo, voluptatem non ipsam minima reprehenderit earum odio debitis porro, deleniti id facilis. Dicta sint enim autem esse cum.
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
+          </div>
+
+          <div class="friend">
+            <div class="friend-profile">
+              <a href="" class="avatar-link">
+                <img src="./blank-profile-pics.png" alt="blank profile pics">
+              </a>
+              <a href="" class="profile-link">
+                <span class="profile-name">David</span>
+                <span class="profile-username">@davidjoy</span>
+              </a>
             </div>
-            <div class="reactions">
-              <span><a href="#">like</a></span>
-              <span><a href="#">comment</a></span>
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
+          </div>
+
+          <div class="friend">
+            <div class="friend-profile">
+              <a href="" class="avatar-link">
+                <img src="./blank-profile-pics.png" alt="blank profile pics">
+              </a>
+              <a href="" class="profile-link">
+                <span class="profile-name">Jason</span>
+                <span class="profile-username">@Jason</span>
+              </a>
             </div>
+            <button class="profile-shortcut">
+              <div></div>
+            </button>
           </div>
         </div>
       </main>
@@ -247,4 +261,4 @@
     </div>
   </div>
 </body>
-</html>
+</html> -->
