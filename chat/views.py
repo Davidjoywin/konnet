@@ -62,13 +62,14 @@ def chatFriendList(request):
     return render(request, 'friends/chatted_friends.html', context)
 
 @login_required
-def chatWithFriend(request, friend_profile):
+def chatWithFriend(request, profile_username):
     """
     Chat interface to chat friends
     """
     user = request.user
-    user_profile = Profile.objects.get(username=request.user.username)
-    friend_profile = Profile.objects.get(username=friend_profile)
+    user_profile = Profile.objects.get(username=user.username)
+    # friend_profile = Profile.objects.get(username=profile_username)
+    friend_profile = Profile.objects.get(username='david')
     messages = Message.objects.filter(
         (Q(sender=user_profile)&
         Q(receiver=friend_profile)) |
@@ -77,6 +78,7 @@ def chatWithFriend(request, friend_profile):
     )
     if request.method == 'POST':
         text = request.POST.get('msg')
+        print(request.POST.get('msg'))
         Message.send_message(user_profile, text, friend_profile)
         return redirect(reverse('chat:chat_friend', args=(friend_profile, )))
 
@@ -88,7 +90,7 @@ def chatWithFriend(request, friend_profile):
     return render(request, 'chats/home.html', context)
 
 @login_required
-def acceptedFriends(request):
+def FriendList(request):
     """
     List friends. People who are already friends
     """
@@ -104,18 +106,16 @@ def acceptedFriends(request):
         'new_friends': new_friends
     }
 
-    return HttpResponse()
-
-    # return render(request, 'friends/list_friends.html', context)
-
-def listFriends(request):
-    user_profile = Profile.objects.get(username=request.user.username)
-    friend_list = user_profile.friends.all()
-    context = {
-        'friends': friend_list
-    }
-
     return render(request, 'friends/list_friends.html', context)
+
+# def listFriends(request):
+#     user_profile = Profile.objects.get(username=request.user.username)
+#     friend_list = user_profile.friends.all()
+#     context = {
+#         'friends': friend_list
+#     }
+
+#     return render(request, 'friends/list_friends.html', context)
     
 
 def getNoUnreads(request):
@@ -160,7 +160,7 @@ def getGroups(request):
 
 @login_required
 def followRequest(request):
-    user_profile = Profile.objects.get(user=request.user.username)
+    user_profile = Profile.objects.get(username=request.user.username)
     get_all_friend_req = user_profile.getFriendRequests()
     
     context = {
