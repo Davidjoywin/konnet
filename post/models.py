@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-from user_auth.models import Profile
+from account.models import Profile
 
 
 class FilePost(models.Model):
@@ -9,11 +9,11 @@ class FilePost(models.Model):
     like = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
 class Post(models.Model):
-    post_by = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    poster = models.ForeignKey(Profile, related_name="Poster", on_delete=models.CASCADE)
     text = models.TextField()
     file_post = models.ManyToManyField(FilePost)
     when_posted = models.DateTimeField(auto_now=True)
-    like = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    like = models.ManyToManyField(Profile, related_name="like")
 
     class Meta:
         verbose_name = 'Post'
@@ -28,7 +28,7 @@ class Comment(models.Model):
     file_post = models.ForeignKey(FilePost, blank=True, on_delete=models.CASCADE)
     text = models.TextField()
     date_time = models.DateTimeField(auto_now=True)
-    like = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    like = models.ManyToManyField(Profile)
 
 class Reply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)

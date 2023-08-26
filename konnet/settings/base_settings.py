@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'chat',
     'post',
-    'user_auth',
+    'account',
 ]
 
 MIDDLEWARE = [

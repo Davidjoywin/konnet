@@ -5,12 +5,12 @@ from . import views
 
 app_name='chat'
 urlpatterns = [
-    path('', views.home_chat, name='home'),
-    path('friends', views.list_friends, name='friends'),
-    path('reqests_from_friends', views.whats, name='whats'),
-    path('<str:profile>', views.chat_friends, name='chat_friend'),
-    path('add-friend/<int:friend>', views.add_new_friends, name='add_friends'),
-    path('message/unread', views.get_unreads, name='unreads'),
-    path('friends/no', views.get_no_friends, name='no_friends'),
-    path('groups/no', views.get_no_groups, name='no_groups'),
+    path('', views.chatFriendList, name='home'),
+    path('friends', views.acceptedFriends, name='friends'),
+    path('follow_request', views.followRequest, name='follow-req'),
+    path('<str:profile>', views.chatWithFriend, name='chat_friend'),
+    path('add-friend/<int:friend>', views.addNewFriends, name='add_friends'),
+    path('message/unread', views.getNoUnreads, name='unreads'),
+    path('friends/no', views.getNoFriends, name='no_friends'),
+    path('groups/no', views.getNoGroups, name='no_groups'),
 ]

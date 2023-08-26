@@ -6,49 +6,78 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
-from .models import Friend, Profile, ChatGroup, Message
+from account.models import Profile, Friendship
+from chat.models import ChatGroup, Message
 
 @login_required()
-def home_chat(request):
+def chatFriendList(request):
     """
-    List friends chatted with
+    List friends chatted with:
+    from latest to the oldest
     """
-    user = request.user.friend
+    username = request.user.username
+    user_profile= Profile.objects.get(username=username)
+
+    sender_receiver_ids = Message.objects.filter(
+        Q(sender=user_profile) |
+        Q(receiver=user_profile)
+    ).values_list('sender', 'receiver')
+
+    # chat id filtering out the auth user id
+    chats = []
+
+
+    for ids in sender_receiver_ids:
+        for chat_id in ids:
+            if chat_id != user_profile.id:
+                chats.append(Profile.objects.get(id=chat_id))
+
+    chats = set(chats) # remove duplicates with set
+
+    # get list messages latest where the chats profile appears as the sender
+    # or the receiver and then sort using sent_at(time) as the key
     
-    friend_chat = [
-        User.objects.get(id=id[0])
-        for id in request.user.message_set.values_list('receiver').distinct()
-    ]
-    friend_list = user.friend_list.all()
+    latest_messages = [
+        Message.objects.filter(
+            (Q(sender=user_profile)&
+            Q(receiver=friend_profile)) |
+            (Q(sender=friend_profile)&
+            Q(receiver=user_profile)
+        )).latest()
+
+        for friend_profile in chats
+    ]  # Get message latest where friend_profile is either the sender or the receiver
+
+    chatted_friends = sorted(latest_messages, key=lambda k: k.sent_at)
+    
+    # chatted_friends = [
+    #     Profile.objects.get(id=id[0])
+    #     for id in Message.objects.filter(sender=sender).values_list('receiver').distinct()
+    # ]
 
     context = {
-        'friends': friend_chat
+        'friends': chatted_friends
     }
 
     return render(request, 'friends/chatted_friends.html', context)
 
 @login_required
-def chat_friends(request, profile):
+def chatWithFriend(request, friend_profile):
     """
     Chat interface to chat friends
     """
     user = request.user
-
-    print(profile)
-    
-    friend_profile = User.objects.get(username=profile).profile
-
-    print(type(friend_profile.user))
-
-    messages = Message.objects.filter((Q(sender=user)&
-                                       Q(receiver=friend_profile)) |
-                                       (Q(sender=friend_profile.user)&
-                                       Q(receiver=user.profile))
+    user_profile = Profile.objects.get(username=request.user.username)
+    friend_profile = Profile.objects.get(username=friend_profile)
+    messages = Message.objects.filter(
+        (Q(sender=user_profile)&
+        Q(receiver=friend_profile)) |
+        (Q(sender=friend_profile)&
+        Q(receiver=user_profile))
     )
-
     if request.method == 'POST':
         text = request.POST.get('msg')
-        Friend.send_message(sent_from=user, sent_to=friend_profile, text=text)
+        Message.send_message(user_profile, text, friend_profile)
         return redirect(reverse('chat:chat_friend', args=(friend_profile, )))
 
     context = {
@@ -59,14 +88,14 @@ def chat_friends(request, profile):
     return render(request, 'chats/home.html', context)
 
 @login_required
-def friends(request):
+def acceptedFriends(request):
     """
     List friends. People who are already friends
     """
-    friend = request.user.friend
-    friend_list = friend.friend_list.all()
+    user_profile = Profile.objects.get(username=request.user.username)
+    friend_list = user_profile.getAcceptedFriends()
     new_friends = [i
-        for i in Friend.objects.all()
+        for i in Friendship.objects.all()
         if i in friend_list
     ]
 
@@ -79,10 +108,9 @@ def friends(request):
 
     # return render(request, 'friends/list_friends.html', context)
 
-def list_friends(request):
-    friend = request.user.friend
-    friend_list = friend.friend_list.all()
-
+def listFriends(request):
+    user_profile = Profile.objects.get(username=request.user.username)
+    friend_list = user_profile.friends.all()
     context = {
         'friends': friend_list
     }
@@ -90,35 +118,38 @@ def list_friends(request):
     return render(request, 'friends/list_friends.html', context)
     
 
-def get_unreads(request):
-    user_authenticated = request.user
-    unread_messages = Message.objects.filter(receiver=user_authenticated.profile, read=False).count()
+def getNoUnreads(request):
+    user_profile = Profile.obects.get(username=request.user.username)
+
+    unread_messages = Message.objects.filter(
+        receiver=user_profile.profile, read=False).count()
+    
     unread = {'unread_messages': unread_messages}
 
     return JsonResponse(unread)
 
-def get_no_friends(request):
+def getNoFriends(request):
     authenticated = request.user
-    user = User.objects.get(username=authenticated)
+    user_profile = Profile.objects.get(username=authenticated)
     
-    friend = user.friend
-    no_of_friends = friend.friend_list.all().count()
+    no_of_friends = user_profile.friends.all().count()
     return JsonResponse({"no_of_friends": no_of_friends})
 
-def get_no_groups(request):
+def getNoGroups(request):
     authenticated = request.user
-    user_profile = User.objects.get(username=authenticated).profile
+    user_profile = Profile.objects.get(username=authenticated)
     user_group_chat = user_profile.chatgroup_set.all()
     no_chatgroup = user_group_chat.count()
 
     return JsonResponse({"no_chatgroup": no_chatgroup})
     
 
-def add_new_friends(request, friend):
-    Friend.add_friend(request.user, friend)
+def addNewFriends(request, friend):
+    user_profile = Profile.objects.get(username=request.user.username)
+    user_profile.addFriend(friend)
     return redirect('/')
 
-def get_groups(request):
+def getGroups(request):
     groups = ChatGroup.list_groups()
 
     context = {
@@ -128,9 +159,9 @@ def get_groups(request):
     return JsonResponse(context)
 
 @login_required
-def whats(request):
-    user = Profile.objects.get(user=request.user)
-    get_all_friend_req = [friend.user.profile for friend in user.friend_set.all()]
+def followRequest(request):
+    user_profile = Profile.objects.get(user=request.user.username)
+    get_all_friend_req = user_profile.getFriendRequests()
     
     context = {
         'friend_request': get_all_friend_req

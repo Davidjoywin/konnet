@@ -77,19 +77,59 @@
   
       <main>
         <style>
-          textarea {
-            width: 100%;
-            height: 5rem;
-            font-size: 4rem;
-            background: #040404;
-            color: white;
-            overflow: hidden;
+          :root {
+            --margin-color: #181616;
           }
+
+          #user-post-form {
+            display: flex;
+            max-height: 50vh;
+            flex-direction: column;
+            gap: 1rem;
+            border-bottom: 2px solid #e7e9ea;
+          }
+
+          #textbox {
+            padding: 1rem;
+            min-height: 3rem;
+            border: 2px solid var(--margin-color);
+            line-height: 3rem;
+            color: #e7e9ea;
+            width: calc(100vw - 45vw);
+            font-size: 2.5rem;
+            overflow: auto;
+            cursor:auto
+          }
+
+          #textbox[contenteditable]:empty::before {
+            content: "Write your post here";
+            color: #e7e9ea;
+            opacity: 0.3
+          }
+
+          #textbox::-webkit-scrollbar {
+            width: 0;
+          }
+          
+          #post-bttn {
+            padding: .8rem;
+            margin: 0 1rem 0 0;
+            height: fit-content;
+            width: fit-content;
+            background:#1d9bf0;
+            color: #e7e9ea;
+            align-self: flex-end;
+            cursor: pointer;
+            font-size: 2rem;
+          }
+          
+
         </style>
-        <form action="#" id="friend-search">
+        <form action="#" id="user-post-form">
           <!-- <input type="text"> -->
           <textarea name="" id="" cols="30" rows="10"></textarea>
-          <input type="submit" value="Post">
+          <div contenteditable role="textbox" id="textbox"></div>
+          <input id='post-bttn' type="submit" value="Post">
         </form>
         
         <div id="post-list">

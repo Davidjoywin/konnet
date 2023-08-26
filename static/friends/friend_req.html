@@ -14,7 +14,7 @@
 </form>
 
 <div id="friend-list">
-  {% for friend in friend_requests %}
+  {% for friend in friend_request %}
   <div class="friend">
     <div class="friend-profile">
       <a href="{% url 'post:friend-profile' friend.user %}" class="avatar-link">
@@ -25,7 +25,7 @@
         <span class="profile-username">@{{ friend.user.username }}</span>
       </a>
     </div>
-    {% include 'includes/frnd-menu-bttn.html' %}
+    {% include 'includes/accept.html' %}
   </div>
   {% endfor %}
   

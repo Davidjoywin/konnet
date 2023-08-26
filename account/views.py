@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import tokens
 from django.contrib.auth import login, logout, authenticate
 
+from .models import Profile
+
 
 def register(request):
     if request.method == 'POST':
@@ -18,24 +20,24 @@ def register(request):
 
         first_name, last_name = full_name.split(' ') if len(full_name.split(' ')) == 2 else [full_name, None]
 
-        verified = password1 == password2
+        password_confirmed = password1 == password2
 
-        if verified:
+        if password_confirmed:
             password = make_password(password1)
         else:
             messages.info(request, "Confirmation password incorrect!")
             return redirect('auth:register')
         
-        user = User.objects.create(
+        profile = Profile.objects.create(
             username = username,
             password = password,
             first_name = first_name,
             last_name = last_name,
             email = email
         )
-        user.save()
+        profile.save()
 
-        login(request, user)
+        login(request, profile)
         return redirect('post:home')  
     return render(request, 'auth/signup.html')
 
