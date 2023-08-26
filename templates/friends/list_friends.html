@@ -17,18 +17,16 @@
   {% for friend_profile in friends %}
   <div class="friend">
     <div class="friend-profile">
-      <a href="{% url 'post:friend-profile' friend_profile.other_user.username %}" class="avatar-link">
+      <a href="{% url 'post:friend-profile' friend_profile.user %}" class="avatar-link">
         <img src="{% static 'blank-profile-pics.png' %}" alt="blank profile pics">
       </a>
-      <a href="{% url 'chat:chat_friend' friend_profile.other_user.username %}" class="profile-link">
-        <span class="profile-name">{{ friend_profile.other_user.first_name }} {{ friend_profile.other_user }}</span>
-        <span class="profile-username">@{{ friend_profile.other_user.username }}</span>
+      <a href="{% url 'chat:chat_friend' friend_profile.username %}" class="profile-link">
+        <span class="profile-name">{{ friend_profile.first_name }} {{ friend_profile.last_name }}</span>
+        <span class="profile-username">@{{ friend_profile.username }}</span>
       </a>
     </div>
     {% include 'includes/frnd-menu-bttn.html' %}
   </div>
-  {% empty %}
-  <h1 style="color: red; text-align: center">This is empty</h1>
   {% endfor %}
   
 </div>

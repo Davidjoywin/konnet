@@ -177,7 +177,7 @@
   {% endfor %} 
 </div>
 
-<form action="{% url 'chat:chat_friend' 'david' %}" id="chat-form" method="post">
+<form action="{% url 'chat:chat_friend' friend_profile.user.username %}" id="chat-form" method="post">
   {% csrf_token %} 
   <input type="text" name="msg">
   <input type="submit" value="send">
