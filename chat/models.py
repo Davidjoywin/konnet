@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-from account.models import Profile
+from account.models import Profile, Friendship
 from django.contrib.auth.models import User
 
 
@@ -151,11 +151,13 @@ class Message(models.Model):
     
     @classmethod
     def send_message(cls, sender, msg, receiver):
-        friends = sender.getFriends()
-        if receiver in friends:
-            cls.objects.create(sender=sender, text=msg, receiver=receiver).save()
+        friends = sender.getAcceptedFriends()
+        receiver_friendship = Friendship.objects.get(user=sender, other_user=receiver)
+        if receiver_friendship in friends:
+            msg = cls.objects.create(sender=sender, text=msg, receiver=receiver)
+            msg.save()
         else:
-            raise PermissionError("You are allowed to send message to a user not on your list.")
+            raise PermissionError("You are not allowed to send message to a user not on your list.")
 
     def message_read(self):
         self.read = True

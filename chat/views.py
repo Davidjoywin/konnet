@@ -43,12 +43,21 @@ def chatFriendList(request):
             Q(receiver=friend_profile)) |
             (Q(sender=friend_profile)&
             Q(receiver=user_profile)
-        )).latest()
+        )).latest('sent_at')
 
         for friend_profile in chats
     ]  # Get message latest where friend_profile is either the sender or the receiver
 
-    chatted_friends = sorted(latest_messages, key=lambda k: k.sent_at)
+    chatted_friends = sorted(latest_messages, key=lambda k: k.sent_at, reverse=True)
+
+    friends = []
+
+    for msg in chatted_friends:
+        if msg.sender.username == request.user.username:
+            friends.append(msg.receiver)
+
+        elif msg.receiver.username == request.user.username:
+            friends.append(msg.sender)
     
     # chatted_friends = [
     #     Profile.objects.get(id=id[0])
@@ -56,19 +65,20 @@ def chatFriendList(request):
     # ]
 
     context = {
-        'friends': chatted_friends
+        # 'friends': chatted_friends
+        'friends': friends
     }
 
     return render(request, 'friends/chatted_friends.html', context)
 
 @login_required
-def chatWithFriend(request, friend_profile):
+def chatWithFriend(request, friend_username):
     """
     Chat interface to chat friends
     """
     user = request.user
-    user_profile = Profile.objects.get(username=request.user.username)
-    friend_profile = Profile.objects.get(username=friend_profile)
+    user_profile = Profile.objects.get(username=user.username)
+    friend_profile = Profile.objects.get(username=friend_username)
     messages = Message.objects.filter(
         (Q(sender=user_profile)&
         Q(receiver=friend_profile)) |
@@ -94,19 +104,22 @@ def acceptedFriends(request):
     """
     user_profile = Profile.objects.get(username=request.user.username)
     friend_list = user_profile.getAcceptedFriends()
-    new_friends = [i
-        for i in Friendship.objects.all()
-        if i in friend_list
-    ]
+
+    # Get all the profile who are neither on my friend list
+    # nor the authenticated user
+    profiles = Profile.objects.exclude(username='david')
+    recommended_friends = []
+    friend_profiles = [i.other_user for i in friend_list]
+    for profile in profiles:
+        if profile not in friend_profiles:
+            recommended_friends.append(profile)
 
     context = {
         'friends': friend_list,
-        'new_friends': new_friends
+        'recommended_friends': recommended_friends
     }
 
-    return HttpResponse()
-
-    # return render(request, 'friends/list_friends.html', context)
+    return render(request, 'friends/list_friends.html', context)
 
 def listFriends(request):
     user_profile = Profile.objects.get(username=request.user.username)
@@ -149,6 +162,15 @@ def addNewFriends(request, friend):
     user_profile.addFriend(friend)
     return redirect('/')
 
+def acceptFriendRequest(request, friend):
+    user_profile = Profile.objects.get(username=request.user.username)
+    user_profile.acceptRequest(friend)
+    return redirect('/')
+
+def removeFriend(request, friend):
+    user_profile = Profile.objects.get(username=request.user.username)
+    user_profile.removeFriend(friend)
+
 def getGroups(request):
     groups = ChatGroup.list_groups()
 
@@ -160,7 +182,7 @@ def getGroups(request):
 
 @login_required
 def followRequest(request):
-    user_profile = Profile.objects.get(user=request.user.username)
+    user_profile = Profile.objects.get(username=request.user.username)
     get_all_friend_req = user_profile.getFriendRequests()
     
     context = {

@@ -14,21 +14,39 @@
 </form>
 
 <div id="friend-list">
+  <h2 style="color: #e3d2d2; font-size: 4rem; margin: 1rem 2rem; border-width: 0 0 2px 0; border-style: solid; border-color: #323232">Friends</h2>
   {% for friend_profile in friends %}
   <div class="friend">
     <div class="friend-profile">
-      <a href="{% url 'post:friend-profile' friend_profile.user %}" class="avatar-link">
+      <a href="{% url 'post:friend-profile' friend_profile.other_user.username %}" class="avatar-link">
         <img src="{% static 'blank-profile-pics.png' %}" alt="blank profile pics">
       </a>
-      <a href="{% url 'chat:chat_friend' friend_profile.username %}" class="profile-link">
-        <span class="profile-name">{{ friend_profile.first_name }} {{ friend_profile.last_name }}</span>
-        <span class="profile-username">@{{ friend_profile.username }}</span>
+      <a href="{% url 'chat:chat_friend' friend_profile.other_user.username %}" class="profile-link">
+        <span class="profile-name">{{ friend_profile.other_user.first_name }} {{ friend_profile.other_user.last_name }}</span>
+        <span class="profile-username">@{{ friend_profile.other_user.username }}</span>
       </a>
     </div>
     {% include 'includes/frnd-menu-bttn.html' %}
   </div>
   {% endfor %}
-  
+  <h2 style="color: #e3d2d2; font-size: 3.5rem; margin: 1rem 2rem; border-width: 0 0 2px 0; border-style: solid; border-color: #323232">Recommended Friends</h2>
+
+  {% for friend in recommended_friends %} 
+  <div class="friend">
+    <div class="friend-profile">
+      <a href="{% url 'post:friend-profile' friend.username %}" class="avatar-link">
+        <img src="{% static 'blank-profile-pics.png' %}" alt="blank profile pics">
+      </a>
+      <a href="{% url 'chat:chat_friend' friend.username %}" class="profile-link">
+        <span class="profile-name">{{ friend.first_name }} {{ friend.last_name }}</span>
+        <span class="profile-username">@{{ friend.username }}</span>
+      </a>
+    </div>
+    <a href="{% url 'chat:add-friends' friend.username %}">
+      {% include 'includes/follow.html' %}
+    </a>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}
 

@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     })
 
-    const form = document.querySelector('form');
+    // const form = document.querySelector('form');
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      let text = document.querySelector('#text');
-      console.log(text.value);
-      text.value = '';
-    })
+    // form.addEventListener('submit', (event) => {
+    //   event.preventDefault();
+    //   let text = document.querySelector('#text');
+    //   console.log(text.value);
+    //   text.value = '';
+    // })
 
     const menu_bttn = document.querySelector(".menu-bttn");
     const menu = document.querySelector(".menu");
