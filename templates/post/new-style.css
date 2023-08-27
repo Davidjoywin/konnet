@@ -1,5 +1,6 @@
 :root {
   --margin-color: #181616;
+  --form-background-color: #181616;
 }
 
 /* ---------------other style-------------- */
@@ -7,7 +8,7 @@
 #user-post-form {
   display: flex;
   max-height: 50vh;
-  background: red;
+  background: var(--form-background-color) !important;
   flex-direction: column;
   gap: 1rem;
   border-bottom: 2px solid #e7e9ea;

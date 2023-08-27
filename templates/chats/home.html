@@ -169,10 +169,14 @@
 <div id="chat-message">
   {% for msg in messages %}
   {% if msg.sender.username == user.username %}
-  <div class="sender">{{ msg.text }}</div>
+  <div class="sender">{{ msg.text }}
+    <span class="msg-sent-time">{{ msg.sent_at|time:"H:i" }}</span>
+  </div>
   {% endif %} 
   {% if msg.sender.username == friend_profile.username %}
-  <div class="receiver">{{ msg.text }}</div>
+  <div class="receiver">{{ msg.text }}
+    <span class="msg-sent-time">{{ msg.sent_at|time:"H:i" }}</span>
+  </div>
   {% endif %} 
   {% endfor %} 
 </div>

@@ -1,7 +1,7 @@
 :root {
   --body-font-color: #cfcaca;
   --body-background-color: #030303;
-  --sender-background-color: #56b656;
+  --sender-background-color: #181818;
   --receiver-background-color: #1b5e1b;
   --main-width: calc(97vw - 40vw - 3rem);
 }
@@ -72,7 +72,7 @@ button {
   color: var(--body-font-color);
   align-self: flex-end;
   background: inherit;
-  font-size: 2rem;
+  font-size: 5rem;
   align-self: center;
 }
 
@@ -184,12 +184,26 @@ img {
   background: var(--receiver-background-color);
 }
 
+.sender,
+.receiver {
+  display: flex;
+  flex-direction: column;
+}
+
+.msg-sent-time {
+  width: fit-content;
+  font-size: 1.5rem;
+  align-self: flex-end;
+}
+
+
+
 #chat-form {
   position: absolute;
   display: flex;
   justify-content: center;
   bottom: 1rem;
-  gap: 2rem;
+  gap: 1rem;
   width: calc(97vw - 40vw - 3rem);
   background: inherit;
   /* background: inherit; */
@@ -215,9 +229,10 @@ input[type=text]:focus {
 }
 
 input[type=submit] {
-  width: 5rem;
+  width: fit-content;
   border: none;
-  font-size: 1.5rem;
+  padding: 0 1rem;
+  font-size: 2.5rem;
   border-radius: 2rem;
 }
 /* -------------end------------ */
@@ -233,14 +248,19 @@ input[type=submit] {
 
 #friend-search input[type=text] {
   width: minmax(50%, 75%);
+  color: var(--body-font-color);
   padding-top: 2px;
   padding-bottom: 2px;
+  background: #181616 !important;
   font-style: normal;
 }
 
 #friend-search input[type=submit] {
   width: fit-content;
   padding: 0 1rem;
+  color: var(--body-font-color);
+  background: #181616;
+  font-size: 2rem;
 }
 
 #friend-list::-webkit-scrollbar{

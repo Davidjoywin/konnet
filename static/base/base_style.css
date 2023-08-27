@@ -233,14 +233,18 @@ input[type=submit] {
 
 #friend-search input[type=text] {
   width: minmax(50%, 75%);
+  color: var(--body-font-color);
   padding-top: 2px;
   padding-bottom: 2px;
+  background: #181616 !important;
   font-style: normal;
 }
 
 #friend-search input[type=submit] {
   width: fit-content;
   padding: 0 1rem;
+  color: var(--body-font-color);
+  background: #181616;
 }
 
 #friend-list::-webkit-scrollbar{

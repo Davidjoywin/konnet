@@ -17,15 +17,17 @@
   {% for friend in friend_request %}
   <div class="friend">
     <div class="friend-profile">
-      <a href="{% url 'post:friend-profile' friend.user %}" class="avatar-link">
+      <a href="{% url 'post:friend-profile' friend.username %}" class="avatar-link">
         <img src="{% static 'blank-profile-pics.png' %}" alt="blank profile pics">
       </a>
-      <a href="{% url 'chat:chat_friend' friend.user.username %}" class="profile-link">
-        <span class="profile-name">{{ friend.user.first_name }} {{ friend.user.last_name }}</span>
-        <span class="profile-username">@{{ friend.user.username }}</span>
+      <a href="{% url 'chat:chat_friend' friend.username %}" class="profile-link">
+        <span class="profile-name">{{ friend.first_name }} {{ friend.user.last_name }}</span>
+        <span class="profile-username">@{{ friend.username }}</span>
       </a>
     </div>
-    {% include 'includes/accept.html' %}
+    <a href="{% url 'chat:accept-friend-request' friend.username %}">
+      {% include 'includes/accept.html' %}
+    </a>
   </div>
   {% endfor %}
   

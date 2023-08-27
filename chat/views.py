@@ -159,17 +159,20 @@ def getNoGroups(request):
 
 def addNewFriends(request, friend):
     user_profile = Profile.objects.get(username=request.user.username)
-    user_profile.addFriend(friend)
+    friend_profile = Profile.objects.get(username=friend)
+    user_profile.addFriend(friend_profile)
     return redirect('/')
 
 def acceptFriendRequest(request, friend):
     user_profile = Profile.objects.get(username=request.user.username)
-    user_profile.acceptRequest(friend)
+    friend_profile = Profile.objects.get(username=friend)
+    user_profile.acceptRequest(friend_profile)
     return redirect('/')
 
 def removeFriend(request, friend):
     user_profile = Profile.objects.get(username=request.user.username)
-    user_profile.removeFriend(friend)
+    friend_profile = Profile.objects.get(username=friend)
+    user_profile.removeFriend(friend_profile)
 
 def getGroups(request):
     groups = ChatGroup.list_groups()

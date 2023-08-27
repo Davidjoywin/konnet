@@ -25,7 +25,9 @@
         <span class="profile-username">@{{ friend.username }}</span>
       </a>
     </div>
-    {% include 'includes/accept.html' %}
+    <a href="{% url 'chat:accept-friend-request' friend.username %}">
+      {% include 'includes/accept.html' %}
+    </a>
   </div>
   {% endfor %}
   
