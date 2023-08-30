@@ -12,13 +12,12 @@ from .models import Profile
 
 def register(request):
     if request.method == 'POST':
-        full_name = request.POST.get('fname')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         email=request.POST.get("email")
         username=request.POST.get("username").lower()
-        password1=request.POST.get("password")
+        password1=request.POST.get("password1")
         password2=request.POST.get("verify-password")
-
-        first_name, last_name = full_name.split(' ') if len(full_name.split(' ')) == 2 else [full_name, None]
 
         password_confirmed = password1 == password2
 
@@ -39,7 +38,8 @@ def register(request):
 
         login(request, profile)
         return redirect('post:home')  
-    return render(request, 'auth/signup.html')
+    # return render(request, 'auth/signup.html')
+    return render(request, 'auth-template/register.html')
 
 def auth_login(request):
     if request.method == 'POST':
@@ -53,7 +53,7 @@ def auth_login(request):
             return redirect("post:home")
         else:
             messages.add_message(request, messages.ERROR, "Username or Password incorrect!")
-    return render(request, "auth/login.html")
+    return render(request, "auth-template/login.html")
 
 def auth_logout(request):
     if request.user.is_authenticated:

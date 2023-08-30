@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    {% block title %}{% endblock %}
+  </title>
+  <link rel="stylesheet" href="{% static 'auth/style.css' %}">
+</head>
+<body>
+  <div id="body-container">
+    <header>
+      <div id="left-header">
+        <div id="app-name">
+          <a href="">Konnet</a>
+        </div>
+      </div>
+    </header>
+    
+    <div id="container">
+      <main>
+        {% block main %} {% endblock %}
+      </main>
+    </div>
+  </div>
+</body>
+<!-- <script src="{% static 'includes/follow.js' %}"></script> -->
+<script>
+  const password = document.querySelector('.password');
+  const visibility = document.querySelector('.visibility');
+
+  visibility.addEventListener('click', () => {
+    if (password.type === 'password') {
+      password.type = 'text';
+      visibility.innerText = 'hide';
+    } else {
+      password.type = 'password';
+      visibility.innerText = 'show';
+    }
+  })
+
+</script>
+</html>

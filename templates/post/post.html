@@ -4,15 +4,33 @@
 Post
 {% endblock %}
 
-{% block custom-style %}
 {% load static %}
+
+{% block custom-style %}
 <link rel="stylesheet" href="{% static 'post/new-style.css' %}">
+
 {% endblock %}
 
 {% block main %}
-  <form action="#" id="user-post-form" style="margin: .6rem;background: #181616">
+  <style>
+    #user-post-form {
+      margin: .6rem;
+      background: #181616
+    }
+
+    #textbox {
+      background: #181616;
+    }
+
+    @media  screen and (max-width:900px) {
+      #textbox {
+        width: 92vw;
+      }
+    }
+  </style>
+  <form action="#" id="user-post-form">
     <!-- <input type="text"> -->
-    <div contenteditable role="textbox" id="textbox" style="background: #181616"></div>
+    <div contenteditable role="textbox" id="textbox"></div>
     <input id='post-bttn' type="submit" value="Post">
   </form>
   

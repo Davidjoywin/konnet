@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Authenication</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    h3 {
+      border-bottom: 4px solid var(--body-font-color)
+    }
+
+    main {
+      padding: .6rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="body-container">
+    <header>
+      <div id="left-header">
+        <div id="app-name">
+          <a href="">Konnet</a>
+        </div>
+      </div>
+    </header>
+    
+    <div id="container">
+      <main>
+        <h3>Register</h3>
+        <form action="">
+          <div class="info-div">
+            <input class="info" type="text" autocomplete="off" required>
+            <label for="">Username</label>
+          </div>
+
+          <div class="info-div">
+            <input class="info" type="email" autocomplete="off" required>
+            <label for="">Email</label>
+          </div>
+
+          <div class="info-div">
+            <input class="info" type="text" autocomplete="off" required>
+            <label for="">First name</label>
+          </div>
+
+          <div class="info-div">
+            <input class="info" type="text" autocomplete="off" required>
+            <label for="">Last Name</label>
+          </div>
+
+          <div class="info-div pwd-div">
+            <input class="info password" type="password" autocomplete="off" required>
+            <span class="visibility">show</span>
+            <label for="">Password</label>
+          </div>
+
+          <div class="info-div pwd-div">
+            <input class="info password" type="password" autocomplete="off" required>
+            <span class="visibility">show</span>
+            <label for="">Verify password</label>
+          </div>
+
+          <input type="submit" value="Create Account" class="rounded">
+          <div id='auth-text'>Already have an account?</div>
+          <a href="" class="login-redirect rounded">
+            Sign In
+          </a>
+        </form>
+      </main>
+    </div>
+  </div>
+</body>
+<!-- <script src="{% static 'includes/follow.js' %}"></script> -->
+<script>
+
+  const elements = document.querySelectorAll('.pwd-div');
+
+  elements.forEach(element => {
+    const visibility = element.querySelector('.visibility');
+    const password = element.querySelector('.password');
+
+    visibility.addEventListener('click', () => {
+      if (password.type === 'password') {
+        password.type = 'text';
+        visibility.innerText = 'hide';
+      } else {
+        password.type = 'password';
+        visibility.innerText = 'show';
+      }
+    })
+  })
+
+</script>
+</html>
