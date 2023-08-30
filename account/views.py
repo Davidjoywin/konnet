@@ -37,8 +37,9 @@ def register(request):
         profile.save()
 
         login(request, profile)
-        return redirect('post:home')
-    return render(request, 'auth/register.html')
+        return redirect('post:home')  
+    # return render(request, 'auth/signup.html')
+    return render(request, 'auth-template/register.html')
 
 def auth_login(request):
     if request.method == 'POST':
@@ -52,7 +53,7 @@ def auth_login(request):
             return redirect("post:home")
         else:
             messages.add_message(request, messages.ERROR, "Username or Password incorrect!")
-    return render(request, "auth/login.html")
+    return render(request, "auth-template/login.html")
 
 def auth_logout(request):
     if request.user.is_authenticated:
