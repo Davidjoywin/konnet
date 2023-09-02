@@ -278,7 +278,7 @@ input[type=submit] {
   nav {
     position: absolute;
     display: none;
-    width: fit-content;
+    width: 50vw;
     padding-bottom: 10rem;
     background: var(--body-background-color);
   }

@@ -1,0 +1,15 @@
+h2 {
+  margin-top: 1rem;
+  font-size: 3.5rem;
+  text-align: center;
+  padding-bottom: 1rem;
+  color: var(--message-color);
+}
+
+h3 {
+  border-bottom: 4px solid var(--body-font-color)
+}
+
+main {
+  padding: .6rem;
+}

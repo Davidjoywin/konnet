@@ -6,11 +6,11 @@ a {
 .follow-friend {
   width: fit-content;
   height: fit-content;
-  padding: .5rem;
-  font-size: 2rem;
+  padding: .5rem 1rem;
+  font-size: 1.8rem;
   box-sizing: content-box;
   border-radius: 2rem;
-  background: rgb(93, 190, 93);
+  background: var(--bttn-background);
 }
 
 .dots {
@@ -18,7 +18,7 @@ a {
   width: .5rem;
   height: .5rem;
   border-radius: 50%;
-  background: red;
+  background: var(--body-font-color);
 }
 
 .dots::before,
@@ -28,7 +28,7 @@ a {
   width: inherit;
   height: inherit;
   border-radius: 50%;
-  background: red;
+  background: var(--body-font-color);
 }
 
 .dots::before {
@@ -52,7 +52,8 @@ a {
 
 .menu-bttn:hover,
 .visited {
-  background: blue;
+  background: var(--bttn-background);
+  cursor: pointer;
 }
 
 .menu-bttn .menu {

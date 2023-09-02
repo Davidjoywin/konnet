@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register - Authenication</title>
   <link rel="stylesheet" href="{% static 'auth-template/style.css' %}">
+  <link rel="stylesheet" href="{% static 'auth-template/register-style.css' %}">
   <style>
-    h2 {
+    /* h2 {
       margin-top: 1rem;
       font-size: 3.5rem;
       text-align: center;
@@ -22,7 +23,7 @@
 
     main {
       padding: .6rem;
-    }
+    } */
   </style>
 </head>
 <body>
@@ -45,33 +46,33 @@
         <form action="{% url 'auth:register' %}" method="post">
           {% csrf_token %}
           <div class="info-div">
-            <input name="username" class="info" type="text" autocomplete="off" required>
+            <input name="username" class="info" type="text" autocomplete="off" placeholder="Username" required>
             <label for="">Username</label>
           </div>
 
           <div class="info-div">
-            <input name="email" class="info" type="email" autocomplete="off" required>
+            <input name="email" class="info" type="email" autocomplete="off" placeholder="Email" required>
             <label for="">Email</label>
           </div>
 
           <div class="info-div">
-            <input name="first_name" class="info" type="text" autocomplete="off" required>
+            <input name="first_name" class="info" type="text" autocomplete="off" placeholder="First name" required>
             <label for="">First name</label>
           </div>
 
           <div class="info-div">
-            <input name="last_name" class="info" type="text" autocomplete="off" required>
+            <input name="last_name" class="info" type="text" autocomplete="off" placeholder="Last Name" required>
             <label for="">Last Name</label>
           </div>
 
           <div class="info-div pwd-div">
-            <input name="password1" class="info password" type="password" autocomplete="off" required>
+            <input name="password1" class="info password" type="password" autocomplete="off" placeholder="Password" required>
             <span class="visibility">show</span>
             <label for="">Password</label>
           </div>
 
           <div class="info-div pwd-div">
-            <input name="verify-password" class="info password" type="password" autocomplete="off" required>
+            <input name="verify-password" class="info password" type="password" autocomplete="off" placeholder="comfirm password" required>
             <span class="visibility">show</span>
             <label for="">Verify password</label>
           </div>

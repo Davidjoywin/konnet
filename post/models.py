@@ -5,6 +5,7 @@ from account.models import Profile
 
 
 class FilePost(models.Model):
+    # post = models.ForeignKey(Post, on_delete=models.CASCADE)
     file = models.FileField(upload_to="upload/posts")
     like = models.ManyToManyField(settings.AUTH_USER_MODEL)
 

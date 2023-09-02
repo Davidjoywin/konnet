@@ -12,24 +12,9 @@ Post
 {% endblock %}
 
 {% block main %}
-  <style>
-    #user-post-form {
-      margin: .6rem;
-      background: #181616
-    }
-
-    #textbox {
-      background: #181616;
-    }
-
-    @media  screen and (max-width:900px) {
-      #textbox {
-        width: 92vw;
-      }
-    }
-  </style>
   <form action="#" id="user-post-form">
     <!-- <input type="text"> -->
+    {% csrf_token %}
     <div contenteditable role="textbox" id="textbox"></div>
     <input id='post-bttn' type="submit" value="Post">
   </form>
@@ -182,4 +167,41 @@ Post
       </div>
     </div>
   </div>
+  <script>
+    $('#user-post-form').submit(
+      (e) => {
+        e.preventDefault();
+
+        var CSRF_token = $('input[name=csrfmiddlewaretoken]').val();
+
+        var data = document.querySelector('#textbox').innerText;
+
+        $.post('post:home', {
+          post: data,
+          csrfmiddlewaretoken: CSRF_token
+        });
+        console.log(data);
+        console.log(CSRF_token);
+        document.querySelector('#textbox').innerText = '';
+      }
+    );
+    // const user_post_form = document.querySelector("#user-post-form");
+    // user_post_form.addEventListener('submit', (e) => {
+    //   e.preventDefault();
+    //   const textbox = document.querySelector("#textbox");
+    //   let textbox_text = textbox.innerText;
+    //   if (textbox_text) {
+    //     console.log(textbox_text);
+    //     textbox.innerText = '';
+    //   }
+    //   $.ajax({
+    //     url: "{% url 'post:home' %}",
+    //     method: 'post',
+    //     success: (data, status) => {
+    //       {post: textbox}
+    //       console.log(data, status);
+    //     }
+    //   });
+    // });
+  </script>
 {% endblock %}

@@ -2,7 +2,7 @@ import json
 from django.db.models import Q
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 
@@ -78,7 +78,8 @@ def chatWithFriend(request, friend_username):
     """
     user = request.user
     user_profile = Profile.objects.get(username=user.username)
-    friend_profile = Profile.objects.get(username=friend_username)
+    friend_profile = get_object_or_404(Profile, username=friend_username)
+
     messages = Message.objects.filter(
         (Q(sender=user_profile)&
         Q(receiver=friend_profile)) |
@@ -102,16 +103,18 @@ def acceptedFriends(request):
     """
     List friends. People who are already friends
     """
-    user_profile = Profile.objects.get(username=request.user.username)
+    username = request.user.username
+
+    user_profile = Profile.objects.get(username=username)
     friend_list = user_profile.getAcceptedFriends()
 
     # Get all the profile who are neither on my friend list
     # nor the authenticated user
-    profiles = Profile.objects.exclude(username='david')
+    profiles = Profile.objects.exclude(username=username)
     recommended_friends = []
     friend_profiles = [i.other_user for i in friend_list]
     for profile in profiles:
-        if profile not in friend_profiles:
+        if profile not in friend_profiles :
             recommended_friends.append(profile)
 
     context = {

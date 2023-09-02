@@ -1,6 +1,10 @@
 {% extends 'base/base.html' %}
 
-{% load static %}
+{% block custom-style %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'friends/friend_list_style.css' %}">
+{% endblock %}
+
 
 {% block title %}
   Friends
@@ -8,13 +12,33 @@
 
 
 {% block main %}
+<style>
+  /* .friend {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -moz-box;
+    justify-content: space-between;
+  }
+  .friend-profile {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -moz-box;
+    gap: 2rem;
+  }
+  .profile-link { */
+    /* align-self: center; */
+    /* font-size: 1.8rem; */
+  /* } */
+</style>
 <form action="#" id="friend-search">
   <input type="text">
   <input type="submit" value="search">
 </form>
 
 <div id="friend-list">
-  <h2 style="color: #e3d2d2; font-size: 4rem; margin: 1rem 2rem; border-width: 0 0 2px 0; border-style: solid; border-color: #323232">Friends</h2>
+  <h2>Friends</h2>
   {% for friend_profile in friends %}
   <div class="friend">
     <div class="friend-profile">
@@ -29,7 +53,8 @@
     {% include 'includes/frnd-menu-bttn.html' %}
   </div>
   {% endfor %}
-  <h2 style="color: #e3d2d2; font-size: 3.5rem; margin: 1rem 2rem; border-width: 0 0 2px 0; border-style: solid; border-color: #323232">Recommended Friends</h2>
+
+  <h2>Recommended Friends</h2>
 
   {% for friend in recommended_friends %} 
   <div class="friend">

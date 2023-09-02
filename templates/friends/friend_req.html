@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block custom-style %}
+<link rel="stylesheet" href="{% static 'friends/friend_list_style.css' %}?{% now 'U' %}">
+{% endblock %}
+
 {% block title %}
   Friend Requests
 {% endblock %}
@@ -14,6 +18,8 @@
 </form>
 
 <div id="friend-list">
+  <h2>Friend Requests</h2>
+
   {% for friend in friend_request %}
   <div class="friend">
     <div class="friend-profile">

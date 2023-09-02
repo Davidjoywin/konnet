@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Authentication</title>
   <link rel="stylesheet" href="{% static 'auth-template/style.css' %}">
+  <link rel="stylesheet" href="{% static 'auth-template/login-style.css' %}">
   <style>
-    h2 {
+    /* h2 {
       margin-top: 1rem;
       font-size: 3.5rem;
       text-align: center;
@@ -22,7 +23,7 @@
 
     main {
       padding: 4rem;
-    }
+    } */
   </style>
  
 </head>
@@ -45,12 +46,12 @@
         <form action="{% url 'auth:login' %}" method="post">
           {% csrf_token %}
           <div class="info-div">
-            <input class="info" type="text" placeholder="Username" name="username" required>
+            <input class="info" type="text" placeholder="Username" name="username" autocomplete="off" required>
             <label for="">Username</label>
           </div>
           
           <div class="info-div">
-            <input class="info password" type="password" placeholder="Password" name="password" required>
+            <input class="info password" type="password" placeholder="Password" name="password" autocomplete="off" required>
             <span class="visibility">show</span>
             <label for="">Password</label>
           </div>
