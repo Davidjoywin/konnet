@@ -174,15 +174,20 @@ Post
 
         var CSRF_token = $('input[name=csrfmiddlewaretoken]').val();
 
-        var data = document.querySelector('#textbox').innerText;
+        var text_data = document.querySelector('[contenteditable]').innerText
 
-        $.post('post:home', {
-          post: data,
-          csrfmiddlewaretoken: CSRF_token
+        $.ajax({
+          method: 'POST',
+          url: "{% url 'post:home' %}",
+          headers: {'X-CSRFToken': '{{ CSRF_token }}'},
+          contentType: "application/json",
+          data: JSON.stringify(
+            {user_post: text_data}
+            ),
+          success: (res) => {
+            $('[contenteditable]').html('')
+          }
         });
-        console.log(data);
-        console.log(CSRF_token);
-        document.querySelector('#textbox').innerText = '';
       }
     );
     // const user_post_form = document.querySelector("#user-post-form");

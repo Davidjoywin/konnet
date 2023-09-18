@@ -183,19 +183,39 @@
 
 <form action="{% url 'chat:chat_friend' friend_profile.username %}" id="chat-form" method="post">
   {% csrf_token %} 
-  <input type="text" name="msg">
+  <input type="text" name="msg" id="msg-input">
   <input type="submit" value="send">
 </form>
 
 <script>
-  const chat_form = document.querySelector("#chat-form");
-  const input_text = document.querySelector("input[type=text]");
-  console.log(input_text);
-  const submit_bttn = document.querySelector('input[type=submit]');
-  console.log(submit_bttn);
-  submit_bttn.addEventListener('click', () => {
-    console.log(input_text);
-  });
+  // const chat_form = document.querySelector("#chat-form");
+  // const input_text = document.querySelector("input[type=text]");
+  // console.log(input_text);
+  // const submit_bttn = document.querySelector('input[type=submit]');
+  // console.log(submit_bttn);
+  // submit_bttn.addEventListener('click', () => {
+  //   console.log(input_text);
+  // });
+
+  $('#chat-form').submit(
+      (e) => {
+        e.preventDefault();
+
+        $.ajax({
+          method: 'POST',
+          url: "{% url 'chat:chat_friend' friend_profile.username %}",
+          headers: {'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()},
+          contentType: "application/json",
+          data: JSON.stringify(
+            {msg: $("#msg-input").val()}
+          ),
+          success: (res) => {
+            $('#msg-input').val('');
+            console.log("Message Sent");
+          }
+        });
+      }
+    );
 
 </script>
 {% endblock %} 

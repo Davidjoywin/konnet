@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
@@ -14,14 +16,29 @@ def home(request):
     posts = Post.objects.all()
 
     if request.method == 'POST':
-        user_post = request.POST.get('post')
+        user_profile = Profile.objects.get(username=request.user.username)
+        data = json.load(request)
 
-        post = Post.objects.create(text=user_post)
-        print(post)
+        user_post = data['user_post'].strip()
+        
+        post = Post.objects.create(poster=user_profile, text=user_post)
         post.save()
-        return JsonResponse({"post": post})
+        return JsonResponse({'status': 201})
+    
     context = {'posts': posts}
     return render(request, 'post/post.html', context)
+
+def updatePost(request):
+    posts = Post.objects.all()
+
+    posts = Post.objects.values()
+    print(posts)
+
+    context = {
+        'posts': posts
+    }
+
+    return JsonResponse(context)
 
 def profile(request):
     username = request.user.username

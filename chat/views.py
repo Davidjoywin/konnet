@@ -87,9 +87,12 @@ def chatWithFriend(request, friend_username):
         Q(receiver=user_profile))
     )
     if request.method == 'POST':
-        text = request.POST.get('msg')
-        Message.send_message(user_profile, text, friend_profile)
-        return redirect(reverse('chat:chat_friend', args=(friend_profile, )))
+        data = json.load(request)
+        print(data)
+        text_msg = data["msg"]
+        Message.send_message(user_profile, text_msg, friend_profile)
+        # Message.send_message(user_profile, text, friend_profile)
+        return HttpResponse({200: "success"})
 
     context = {
         'friend_profile': friend_profile,
@@ -97,6 +100,10 @@ def chatWithFriend(request, friend_username):
     }
 
     return render(request, 'chats/home.html', context)
+
+@login_required
+def receiveChat(request, username):
+    ...
 
 @login_required
 def acceptedFriends(request):
